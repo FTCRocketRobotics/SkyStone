@@ -1,0 +1,50 @@
+How to simultaneously connect to 2 Wi-Fi networks.
+
+Use case:  Primary networks attached to Internet.  Secondary network attached 
+to Robot Controller.
+
+Setup:
+To start, you need to have a profile associated with the Wi-Fi ssid on the
+interface that you want to use.
+	1. Press windows button and type in "Network Connections"
+	2. Right-click on the interface that you want to use for Internet and 
+	   select "Disable".  Don't worry, we'll enable it after we associate
+	   the Robot Controller with the secondary interface.
+	3. Connect to the Wi-Fi Direct network like you normally would.  You
+	   should see that the connection is on the secondary Wi-Fi interface
+	   now.
+	4. Right-click on the primary interface and select "Enable".  You 
+	   should now be connected to both Wi-Fi networks.
+	
+Troubleshooting:
+	1. If you already have a Wi-Fi profile that associates the primary 
+	   interface to the Wi-Fi Direct network that you want to use, you 
+	   will have to "Forget" that network.
+	   1.a Press windows button and type in "Wi-Fi settings"
+	   1.b Select the target network and select "Forget"
+	2. If the adb is not connecting, try the "Restart Robot" command from
+	   either the Robot Controller Driver Station
+	   
+
+
+Useful commands:
+
+Determine what devices are attached to adb:
+	adb devices
+	
+Enable a Robot Controller to "listen" to adb connections over Wi-Fi:
+	1. Connect USB-B to USB-micro cable to Robot Controller
+	2. run command: adb tcpip 5555
+	3. Disconnect cable, settings will be retained until next power cycle 
+	   of the Robot Controller.
+	
+Connect Android Studio to Robot Controller over Wi-Fi:
+	1. Ensure Wi-Fi connection on Robot Controller network is active.
+	2. run command: adb connect 192.168.49.1:5555
+	
+Disconnect Android Studio from Robot Controller:
+	1. run command: adb disconnect
+	
+See what Wi-Fi interfaces are available:
+	netsh wlan show interfaces
+	
