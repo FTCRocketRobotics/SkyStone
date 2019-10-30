@@ -50,34 +50,37 @@ public class PickleOpMode extends LinearOpMode {
 
 
 
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.REVERSE);
+        //fL.setDirection(DcMotor.Direction.FORWARD);
+        //fR.setDirection(DcMotor.Direction.REVERSE);
         //bL.setDirection(DcMotor.Direction.FORWARD);
         //bR.setDirection(DcMotor.Direction.REVERSE);
+        Red.setDirection(DcMotor.Direction.FORWARD);
+        Yellow.setDirection(DcMotor.Direction.REVERSE);
+
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive())
         {
           //  telemetry.addData("Status", "Running");
            // telemetry.update();
-            double powerfL;
-            double powerfR;
+            double powerRed;
+            double powerYellow;
 
             double drive = -gamepad1.left_stick_y;
-            powerfL= Range.clip(drive,-1.0,1.0);
-            powerfR= Range.clip(drive,-1.0,1.0);
+            powerRed= Range.clip(drive,-1.0,1.0);
+            powerYellow= Range.clip(drive,-1.0,1.0);
 
-            fR.setPower(powerfR);
+            Red.setPower(powerYellow);
 
-            fL.setPower(powerfL);
+            Yellow.setPower(powerRed);
 
             /** bL.setPower(1.0);
             bR.setPower(1.0);
             fL.setPower(1.0);
             fR.setPower(1.0); */
 
-            telemetry.addData("Target Power", powerfL);
-            telemetry.addData("Motor Power",fL.getPower());
+            telemetry.addData("Target Power", powerRed);
+            telemetry.addData("Motor Power",Red.getPower());
             telemetry.addData("status","running");
             telemetry.update();
 
