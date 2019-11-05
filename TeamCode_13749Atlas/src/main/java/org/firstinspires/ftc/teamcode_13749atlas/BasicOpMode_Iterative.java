@@ -50,16 +50,16 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+@TeleOp(name="Atlas Prototype OpMode", group="Iterative Opmode")
 
 public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor westDrive = null;
-    private DcMotor eastDrive = null;
-    private DcMotor northDrive =null;
-    private DcMotor southDrive =null;
+    private DcMotor blDrive = null;
+    private DcMotor frDrive = null;
+    private DcMotor flDrive =null;
+    private DcMotor brDrive =null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -71,17 +71,17 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        westDrive  = hardwareMap.get(DcMotor.class, "west_drive");
-        eastDrive = hardwareMap.get(DcMotor.class, "east_drive");
-        northDrive = hardwareMap.get(DcMotor.class, "north_drive");
-        southDrive = hardwareMap.get(DcMotor.class, "south_drive");
+        blDrive  = hardwareMap.get(DcMotor.class, "bl_drive");
+        frDrive = hardwareMap.get(DcMotor.class, "fr_drive");
+        flDrive = hardwareMap.get(DcMotor.class, "fl_drive");
+        brDrive = hardwareMap.get(DcMotor.class, "br_drive");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        westDrive.setDirection(DcMotor.Direction.FORWARD);
-        eastDrive.setDirection(DcMotor.Direction.REVERSE);
-        northDrive.setDirection(DcMotor.Direction.FORWARD);
-        southDrive.setDirection(DcMotor.Direction.REVERSE);
+        flDrive.setDirection(DcMotor.Direction.REVERSE);
+        frDrive.setDirection(DcMotor.Direction.FORWARD);
+        blDrive.setDirection(DcMotor.Direction.FORWARD);
+        brDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -108,38 +108,38 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
-        double westPower;
-        double eastPower;
-        double northPower;
-        double southPower;
+        double blPower;
+        double frPower;
+        double flPower;
+        double brPower;
 
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double north = -gamepad1.left_stick_y;
-        double west = gamepad1.right_stick_x;
+        double left_stick_y = -gamepad1.left_stick_y;
+        double left_stick_x = gamepad1.left_stick_x;
         //westPower = Range.clip(north + west, -1.0, 1.0);
         //eastPower = Range.clip(north - west, -1.0, 1.0);
         //northPower = Range.clip(north + turn, -1.0, 1.0);
         //southPower = Range.clip(drive - turn, -1.0, 1.0);
 
         // Tank Mode uses one stick to control each wheel.
-        // - This requires no math, but it is hard to drive forward slowly and keep straight.
+        // this requires no math, but it is hard to drive forward slowly and keep straight.
         // leftPower  = -gamepad1.left_stick_y ;
         // rightPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
-        westDrive.setPower(north);
-        eastDrive.setPower(north);
-        northDrive.setPower(west);
-        southDrive.setPower(west);
+        flDrive.setPower(left_stick_y + left_stick_x);
+        frDrive.setPower(-left_stick_y + left_stick_x);
+        blDrive.setPower(left_stick_y + -left_stick_x);
+        brDrive.setPower(-left_stick_y + -left_stick_x);
 
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", west, north);
+        telemetry.addData("Motors", "left (%.2f), right (%.2f)", left_stick_x, left_stick_y);
     }
 
     /*
