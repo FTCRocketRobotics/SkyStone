@@ -120,6 +120,8 @@ public class BasicOpMode_Iterative extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double left_stick_y = -gamepad1.left_stick_y;
         double left_stick_x = gamepad1.left_stick_x;
+        double left_trigger = gamepad1.left_trigger;
+        double right_trigger = gamepad1.right_trigger;
         //westPower = Range.clip(north + west, -1.0, 1.0);
         //eastPower = Range.clip(north - west, -1.0, 1.0);
         //northPower = Range.clip(north + turn, -1.0, 1.0);
@@ -131,10 +133,10 @@ public class BasicOpMode_Iterative extends OpMode
         // rightPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
-        flDrive.setPower(left_stick_y + left_stick_x);
-        frDrive.setPower(-left_stick_y + left_stick_x);
-        blDrive.setPower(left_stick_y + -left_stick_x);
-        brDrive.setPower(-left_stick_y + -left_stick_x);
+        flDrive.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
+        frDrive.setPower(-left_stick_y + left_stick_x - left_trigger + right_trigger);
+        blDrive.setPower(left_stick_y + -left_stick_x - left_trigger + right_trigger);
+        brDrive.setPower(-left_stick_y + -left_stick_x - left_trigger + right_trigger);
 
 
         // Show the elapsed game time and wheel power.
