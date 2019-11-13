@@ -26,10 +26,10 @@ public class OneDriverStrategyOne extends LinearOpMode {
         fL = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
 
-        bL.setDirection(DcMotor.Direction.FORWARD);
-        bR.setDirection(DcMotor.Direction.REVERSE);
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
 
         //Wait for driver to press PLAY
         waitForStart();
