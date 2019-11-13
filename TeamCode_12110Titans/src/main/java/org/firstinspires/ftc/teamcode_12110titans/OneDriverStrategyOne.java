@@ -56,12 +56,26 @@ public class OneDriverStrategyOne extends LinearOpMode {
             lB_power=Math.sin(direction_wheels);
             rB_power=Math.cos(direction_wheels);
 
-            fL.setPower(lF_power);
-            fR.setPower(rF_power);
-            bL.setPower(lB_power);
-            bR.setPower(rB_power);
+            if((x==0 && y==0) || gamepad1==null ){
+                fL.setPower(0);
+                fR.setPower(0);
+                bL.setPower(0);
+                bR.setPower(0);
+            }else{
+                fL.setPower(lF_power);
+                fR.setPower(rF_power);
+                bL.setPower(lB_power);
+                bR.setPower(rB_power);
 
-            telemetry.addData("Status","Running");
+            }
+
+            telemetry.addData("fl",lF_power);
+            telemetry.addData("fR",rF_power);
+            telemetry.addData("bL",lB_power);
+            telemetry.addData("bR",rB_power);
+
+            
+
             telemetry.update();
         }
 
