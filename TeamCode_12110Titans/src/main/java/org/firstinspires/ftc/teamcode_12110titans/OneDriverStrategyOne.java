@@ -39,6 +39,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
+            double turn=gamepad1.right_stick_x;
+
 
             double direction_travel;
             double direction_wheels;
@@ -57,10 +59,10 @@ public class OneDriverStrategyOne extends LinearOpMode {
             rB_power=Math.cos(direction_wheels);
 
             if((x==0 && y==0) || gamepad1==null ){
-                fL.setPower(0);
-                fR.setPower(0);
-                bL.setPower(0);
-                bR.setPower(0);
+                fL.setPower(-turn);
+                fR.setPower(turn);
+                bL.setPower(-turn);
+                bR.setPower(turn);
             }else{
                 fL.setPower(lF_power);
                 fR.setPower(rF_power);
