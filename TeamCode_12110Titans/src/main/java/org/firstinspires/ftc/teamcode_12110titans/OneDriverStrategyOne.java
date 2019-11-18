@@ -7,6 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.BasicOpMode_Iterative;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @TeleOp
 public class OneDriverStrategyOne extends LinearOpMode {
 
@@ -53,10 +57,58 @@ public class OneDriverStrategyOne extends LinearOpMode {
             direction_travel=Math.atan2(y,x);
             direction_wheels=direction_travel-Math.PI/4;
 
-            lF_power=Math.cos(direction_wheels);
-            rF_power=Math.sin(direction_wheels);
-            lB_power=Math.sin(direction_wheels);
-            rB_power=Math.cos(direction_wheels);
+            lF_power=Math.cos(direction_wheels)-turn;
+            rF_power=Math.sin(direction_wheels)+turn;
+            lB_power=Math.sin(direction_wheels)-turn;
+            rB_power=Math.cos(direction_wheels)+turn;
+
+            //A problem is that when you add power for direction and power for rotating, you can get power >1
+            //So we had to adjust proportions
+            if(Math.abs(lF_power)>1.0) {
+                lF_power = lF_power / Math.abs(lF_power);
+                rF_power = rF_power / Math.abs(lF_power);
+                lB_power = lB_power / Math.abs(lF_power);
+                rB_power = rB_power / Math.abs(lF_power);
+            } else if (Math.abs(rF_power)>1.0) {
+                lF_power = lF_power / Math.abs(rF_power);
+                rF_power = rF_power / Math.abs(rF_power);
+                lB_power = lB_power / Math.abs(rF_power);
+                rB_power = rB_power / Math.abs(rF_power);
+            } else if (Math.abs(lB_power)>1.0) {
+                lF_power = lF_power / Math.abs(lB_power);
+                rF_power = rF_power / Math.abs(lB_power);
+                lB_power = lB_power / Math.abs(lB_power);
+                rB_power = rB_power / Math.abs(lB_power);
+            } else if (Math.abs(rB_power)>1.0) {
+                lF_power = lF_power / Math.abs(rB_power);
+                rF_power = rF_power / Math.abs(rB_power);
+                lB_power = lB_power / Math.abs(rB_power);
+                rB_power = rB_power / Math.abs(rB_power);
+            } else {
+                // do nothing
+            }
+
+            //Sometimes when your going straight (some exceptions0 the power to all the wheels is less then 1.
+
+            //Also appreciate my wonderful code i made :)
+
+            if(Math.abs(lF_power) < 1.0 && Math.abs(rF_power) < 1.0 && Math.abs(lB_power) < 1.0 && Math.abs(rB_power) < 1.0) {
+
+                List<Double> powers = new ArrayList<Double>();
+
+                powers.add(Math.abs(lF_power));
+                powers.add(Math.abs(rF_power));
+                powers.add(Math.abs(lB_power));
+                powers.add(Math.abs(rB_power));
+
+                double largest = Collections.max(powers);
+
+                lF_power = lF_power / largest;
+                rF_power = rF_power / largest;
+                lB_power = lB_power / largest;
+                rB_power = rB_power / largest;
+
+            }
 
             if((x==0 && y==0) || gamepad1==null ){
                 fL.setPower(-turn);
