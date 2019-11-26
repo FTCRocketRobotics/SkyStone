@@ -20,6 +20,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
     private DcMotor bL;
     private DcMotor bR;
 
+    private DcMotor arm;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status","Initialized");
@@ -29,11 +31,14 @@ public class OneDriverStrategyOne extends LinearOpMode {
         bR = hardwareMap.get(DcMotor.class, "bR");
         fL = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+
 
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
         fL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
 
         //Wait for driver to press PLAY
         waitForStart();
@@ -44,6 +49,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
             double turn=gamepad1.right_stick_x;
+            boolean pullIn=gamepad1.dpad_down;
+            boolean pullOut=gamepad1.dpad_up;
 
 
             double direction_travel;
@@ -53,6 +60,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double rF_power;
             double lB_power;
             double rB_power;
+            double arm_power;
 
             direction_travel=Math.atan2(y,x);
             direction_wheels=direction_travel-Math.PI/4;
@@ -86,7 +94,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
                 rB_power = rB_power / Math.abs(rB_power);
             } else {
                 // do nothing
-            }
+        }
 
             //Sometimes when your going straight (some exceptions0 the power to all the wheels is less then 1.
 
@@ -123,11 +131,21 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
+            if(pullIn==true){
+                arm_power=1.0;
+            }else if (pullOut==true){
+                arm_power=-1.0;
+            }else{
+                arm_power=0.0;
+            }
+
+            arm.setPower(arm_power);
+
             telemetry.addData("fl",lF_power);
             telemetry.addData("fR",rF_power);
             telemetry.addData("bL",lB_power);
             telemetry.addData("bR",rB_power);
-
+            telemetry.addData("arm",arm_power);
             
 
             telemetry.update();
