@@ -20,7 +20,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
     private DcMotor bL;
     private DcMotor bR;
 
-    private DcMotor arm;
+   // private DcMotor arm;
 
     @Override
     public void runOpMode() {
@@ -31,14 +31,14 @@ public class OneDriverStrategyOne extends LinearOpMode {
         bR = hardwareMap.get(DcMotor.class, "bR");
         fL = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
-        arm = hardwareMap.get(DcMotor.class, "arm");
+        //arm = hardwareMap.get(DcMotor.class, "arm");
 
 
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
         fL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.FORWARD);
+        //arm.setDirection(DcMotor.Direction.FORWARD);
 
         //Wait for driver to press PLAY
         waitForStart();
@@ -60,7 +60,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double rF_power;
             double lB_power;
             double rB_power;
-            double arm_power;
+            //double arm_power;
 
             direction_travel=Math.atan2(y,x);
             direction_wheels=direction_travel-Math.PI/4;
@@ -131,7 +131,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
-            if(pullIn==true){
+           /* if(pullIn==true){
                 arm_power=1.0;
             }else if (pullOut==true){
                 arm_power=-1.0;
@@ -139,13 +139,13 @@ public class OneDriverStrategyOne extends LinearOpMode {
                 arm_power=0.0;
             }
 
-            arm.setPower(arm_power);
+            arm.setPower(arm_power);*/
 
             telemetry.addData("fl",lF_power);
             telemetry.addData("fR",rF_power);
             telemetry.addData("bL",lB_power);
             telemetry.addData("bR",rB_power);
-            telemetry.addData("arm",arm_power);
+            //telemetry.addData("arm",arm_power);
             
 
             telemetry.update();

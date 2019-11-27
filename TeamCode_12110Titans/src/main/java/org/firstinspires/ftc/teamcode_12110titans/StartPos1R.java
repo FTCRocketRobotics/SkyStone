@@ -17,7 +17,7 @@ public class StartPos1R extends LinearOpMode {
     private DcMotor fR;
     private DcMotor bL;
     private DcMotor bR;
-    private DcMotor arm;
+    //private DcMotor arm;
 
     @Override
     public void runOpMode(){
@@ -26,13 +26,13 @@ public class StartPos1R extends LinearOpMode {
         bR = hardwareMap.get(DcMotor.class, "bR");
         fL = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
-        arm=hardwareMap.get(DcMotor.class,"arm");
+        //arm=hardwareMap.get(DcMotor.class,"arm");
 
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
         fL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.FORWARD);
+       //arm.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
 
@@ -62,7 +62,7 @@ public class StartPos1R extends LinearOpMode {
             fR.setPower(first.rF_power);
             bL.setPower(first.lB_power);
             bR.setPower(first.rB_power);
-            arm.setPower(first.arm_power);
+            //arm.setPower(first.arm_power);
 
             eTime.reset();
             while (eTime.time()< 1.5) {}
@@ -81,7 +81,7 @@ public class StartPos1R extends LinearOpMode {
             fR.setPower(second.rF_power);
             bL.setPower(second.lB_power);
             bR.setPower(second.rB_power);
-            arm.setPower(second.arm_power);
+            //arm.setPower(second.arm_power);
 
             eTime.reset();
             while (eTime.time()< 1.5) {}
@@ -100,7 +100,7 @@ public class StartPos1R extends LinearOpMode {
             fR.setPower(third.rF_power);
             bL.setPower(third.lB_power);
             bR.setPower(third.rB_power);
-            arm.setPower(third.arm_power);
+            //arm.setPower(third.arm_power);
 
             eTime.reset();
             while (eTime.time()< 1.5) {}
@@ -119,7 +119,7 @@ public class StartPos1R extends LinearOpMode {
             fR.setPower(fourth.rF_power);
             bL.setPower(fourth.lB_power);
             bR.setPower(fourth.rB_power);
-            arm.setPower(fourth.arm_power);
+            //arm.setPower(fourth.arm_power);
 
             eTime.reset();
             while (eTime.time()< 1.5) {}
