@@ -51,7 +51,7 @@ public class StartPos1R extends LinearOpMode {
             //go straight ahead
             x = 0.0;
             y = 1.0;
-            turn = 0;
+            turn = 0.0;
             power = 0.8;
             pullIn = false;
             pullOut = false;
@@ -66,6 +66,64 @@ public class StartPos1R extends LinearOpMode {
 
             eTime.reset();
             while (eTime.time()< 1.5) {}
+
+            //go right
+            x = 1.0;
+            y = 0.0;
+            turn = 0.0;
+            power = 0.8;
+            pullIn = false;
+            pullOut = false;
+
+            Movement second = new Movement(x,y,turn,power,pullIn,pullOut);
+
+            fL.setPower(second.lF_power);
+            fR.setPower(second.rF_power);
+            bL.setPower(second.lB_power);
+            bR.setPower(second.rB_power);
+            arm.setPower(second.arm_power);
+
+            eTime.reset();
+            while (eTime.time()< 1.5) {}
+
+            //go backwards
+            x = 0.0;
+            y = -1.0;
+            turn = 0.0;
+            power = 0.8;
+            pullIn = false;
+            pullOut = false;
+
+            Movement third = new Movement(x,y,turn,power,pullIn,pullOut);
+
+            fL.setPower(third.lF_power);
+            fR.setPower(third.rF_power);
+            bL.setPower(third.lB_power);
+            bR.setPower(third.rB_power);
+            arm.setPower(third.arm_power);
+
+            eTime.reset();
+            while (eTime.time()< 1.5) {}
+
+            //Im going leeaft
+            x = -1.0;
+            y = 0.0;
+            turn = 0.0;
+            power = 0.8;
+            pullIn = false;
+            pullOut = false;
+
+            Movement fourth = new Movement(x,y,turn,power,pullIn,pullOut);
+
+            fL.setPower(fourth.lF_power);
+            fR.setPower(fourth.rF_power);
+            bL.setPower(fourth.lB_power);
+            bR.setPower(fourth.rB_power);
+            arm.setPower(fourth.arm_power);
+
+            eTime.reset();
+            while (eTime.time()< 1.5) {}
+
 
 
         }
