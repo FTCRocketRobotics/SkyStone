@@ -30,12 +30,9 @@
 package org.firstinspires.ftc.teamcode_13749atlas;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -66,7 +63,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name="x_Drive: Auto Drive By Encoder", group="x_Drive")
 
-public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class x_drive_base_autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     x_Drive_Base         robot   = new x_Drive_Base();   // Use a Pushbot's hardware

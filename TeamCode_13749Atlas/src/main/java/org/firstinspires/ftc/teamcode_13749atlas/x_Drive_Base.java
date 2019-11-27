@@ -86,9 +86,16 @@ public class x_Drive_Base
         //leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         //rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         bl = hwMap.get(DcMotor.class, "bl_drive");
+        br = hwMap.get(DcMotor.class, "br_drive");
         fr = hwMap.get(DcMotor.class, "fr_drive");
         fl = hwMap.get(DcMotor.class, "fl_drive");
-        br = hwMap.get(DcMotor.class, "br_drive");
+
+        // Most robots need the motor on one side to be reversed to drive forward
+        // Reverse the motor that runs backwards when connected directly to the battery
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.FORWARD);
+        fr.setDirection(DcMotor.Direction.FORWARD);
+        fl.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         bl.setPower(0);
