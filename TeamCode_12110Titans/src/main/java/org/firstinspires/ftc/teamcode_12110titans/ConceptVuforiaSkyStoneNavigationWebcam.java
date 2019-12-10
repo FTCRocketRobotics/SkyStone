@@ -31,6 +31,8 @@ package org.firstinspires.ftc.teamcode_12110titans;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -134,6 +136,10 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
      * servos, this device is identified using the robot configuration tool in the FTC application.
      */
     WebcamName webcamName = null;
+    private DcMotor fL;
+    private DcMotor fR;
+    private DcMotor bL;
+    private DcMotor bR;
 
     private boolean targetVisible = false;
     private float phoneXRotate    = 0;
@@ -145,6 +151,19 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
          * Retrieve the camera we are to use.
          */
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        bL = hardwareMap.get(DcMotor.class, "bL");
+        bR = hardwareMap.get(DcMotor.class, "bR");
+        fL = hardwareMap.get(DcMotor.class, "fL");
+        fR = hardwareMap.get(DcMotor.class, "fR");
+        //arm = hardwareMap.get(DcMotor.class, "arm");
+
+
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        //arm.setDirection(DcMotor.Direction.FORWARD);
+
 
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
@@ -359,10 +378,57 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
 
+                double x = 0;
+                double y = 0;
+                double turn = 0;
+                double power= 0;
+                boolean pullIn = false;
+                boolean pullOut = false;
+
+                ElapsedTime eTime = new ElapsedTime();
+
                 if(translation.get(1)  < 0){
                      //move forward
+                    //go straight ahead
+                    x = 0.0;
+                    y = 1.0;
+                    turn = 0.0;
+                    power = 0.8;
+                    pullIn = false;
+                    pullOut = false;
+
+                    Movement first = new Movement(x,y,turn,power,pullIn,pullOut);
+
+                    fL.setPower(first.lF_power);
+                    fR.setPower(first.rF_power);
+                    bL.setPower(first.lB_power);
+                    bR.setPower(first.rB_power);
+                    //arm.setPower(first.arm_power);
+
+                    eTime.reset();
+                    while (eTime.time()< 1.5) {}
+
+
                 } else if (translation.get(1)  > 0) {
                     //move backward
+                    //go backwards
+                    x = 0.0;
+                    y = -1.0;
+                    turn = 0.0;
+                    power = 0.8;
+                    pullIn = false;
+                    pullOut = false;
+
+                    Movement third = new Movement(x,y,turn,power,pullIn,pullOut);
+
+                    fL.setPower(third.lF_power);
+                    fR.setPower(third.rF_power);
+                    bL.setPower(third.lB_power);
+                    bR.setPower(third.rB_power);
+                    //arm.setPower(third.arm_power);
+
+                    eTime.reset();
+                    while (eTime.time()< 1.5) {}
                 }  else {
                     //do nothing
                 }
