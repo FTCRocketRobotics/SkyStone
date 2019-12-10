@@ -83,6 +83,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 @Autonomous
 
+//The autonomous cat wants belly rubs.
+
 public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
@@ -287,7 +289,6 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
         // The phone starts out lying flat, with the screen facing Up and with the physical top of the phone
         // pointing to the LEFT side of the Robot.
         // The two examples below assume that the camera is facing forward out the front of the robot.
-
         // We need to rotate the camera around it's long axis to bring the correct camera forward.
         if (CAMERA_CHOICE == BACK) {
             phoneYRotate = -90;
@@ -357,6 +358,16 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+
+                if(translation.get(1)  < 0){
+                     //move forward
+                } else if (translation.get(1)  > 0) {
+                    //move backward
+                }  else {
+                    //do nothing
+                }
+
+
             }
             else {
                 telemetry.addData("Visible Target", "none");
