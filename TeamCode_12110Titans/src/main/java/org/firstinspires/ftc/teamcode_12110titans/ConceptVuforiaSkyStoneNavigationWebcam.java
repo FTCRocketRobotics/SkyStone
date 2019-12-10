@@ -30,7 +30,7 @@
 package org.firstinspires.ftc.teamcode_12110titans;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.@Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -81,7 +81,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-@TeleOp(name="SKYSTONE Vuforia Nav Webcam", group ="Concept")
+@Autonomous(name="SKYSTONE Vuforia Nav Webcam", group ="Concept")
 
 public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
 
