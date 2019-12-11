@@ -69,8 +69,10 @@ public class x_drive_base_autonomous extends LinearOpMode {
     x_Drive_Base         robot   = new x_Drive_Base();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
+
+
     static final double     COUNTS_PER_MOTOR_REV    = 1425.2 ;    // GoBilda yellowjacket 5202 series 117RPM
-    static final double     DRIVE_GEAR_REDUCTION    = 1.3 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 0.78 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 3.84 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -116,7 +118,7 @@ public class x_drive_base_autonomous extends LinearOpMode {
         //encoderDrive(DRIVE_SPEED,  8,  8, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 8, 5.0);
+        encoderDrive(DRIVE_SPEED, 36, 0, 5.0);
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         //robot.rightClaw.setPosition(0.0);
@@ -136,25 +138,40 @@ public class x_drive_base_autonomous extends LinearOpMode {
      */
     public void encoderDrive(double speed,
                              double forward,
+                             double strafe,
                              double timeoutS)
     {
         int newblForwardTarget;
         int newbrForwardTarget;
         int newfrForwardTarget;
         int newflForwardTarget;
+        int newblStrafeTarget;
+        int newbrStrafeTarget;
+        int newfrStrafeTarget;
+        int newflStrafeTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newblForwardTarget = robot.bl.getCurrentPosition() + (int)(forward * COUNTS_PER_INCH);
-            newbrForwardTarget = robot.br.getCurrentPosition() + (int)(forward * COUNTS_PER_INCH);
-            newfrForwardTarget = robot.fr.getCurrentPosition() + (int)(forward * COUNTS_PER_INCH);
-            newflForwardTarget = robot.fl.getCurrentPosition() + (int)(forward * COUNTS_PER_INCH);
+            newblForwardTarget = robot.bl.getCurrentPosition() + (int)((-forward) * COUNTS_PER_INCH);
+            newbrForwardTarget = robot.br.getCurrentPosition() + (int)((-forward) *COUNTS_PER_INCH);
+            newfrForwardTarget = robot.fr.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
+            newflForwardTarget = robot.fl.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
+            newblStrafeTarget = robot.bl.getCurrentPosition() + (int)((-strafe) * COUNTS_PER_INCH);
+            newbrStrafeTarget = robot.br.getCurrentPosition() + (int)((strafe) * COUNTS_PER_INCH);
+            newfrStrafeTarget = robot.fr.getCurrentPosition() + (int)((strafe) * COUNTS_PER_INCH);
+            newflStrafeTarget = robot.fl.getCurrentPosition() + (int)((-strafe) * COUNTS_PER_INCH);
             robot.bl.setTargetPosition(newblForwardTarget);
             robot.br.setTargetPosition(newbrForwardTarget);
             robot.fr.setTargetPosition(newfrForwardTarget);
             robot.fl.setTargetPosition(newflForwardTarget);
+            robot.bl.setTargetPosition(newblStrafeTarget);
+            robot.bl.setTargetPosition(newblStrafeTarget);
+            robot.br.setTargetPosition(newbrStrafeTarget);
+            robot.fr.setTargetPosition(newfrStrafeTarget);
+            robot.fl.setTargetPosition(newflStrafeTarget);
+
             // Turn On RUN_TO_POSITION
             robot.bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
