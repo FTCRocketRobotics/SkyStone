@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -71,7 +72,7 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        blDrive  = hardwareMap.get(DcMotor.class, "bl_drive");
+        blDrive = hardwareMap.get(DcMotor.class, "bl_drive");
         frDrive = hardwareMap.get(DcMotor.class, "fr_drive");
         flDrive = hardwareMap.get(DcMotor.class, "fl_drive");
         brDrive = hardwareMap.get(DcMotor.class, "br_drive");
@@ -80,7 +81,7 @@ public class BasicOpMode_Iterative extends OpMode
         // Reverse the motor that runs backwards when connected directly to the battery
         flDrive.setDirection(DcMotor.Direction.REVERSE);
         frDrive.setDirection(DcMotor.Direction.FORWARD);
-        blDrive.setDirection(DcMotor.Direction.FORWARD);
+        blDrive.setDirection(DcMotor.Direction.REVERSE);
         brDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
@@ -129,14 +130,14 @@ public class BasicOpMode_Iterative extends OpMode
 
         // Tank Mode uses one stick to control each wheel.
         // this requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
+        // leftPower  = -gamepad1.left_stick_y;
+        // rightPower = -gamepad1.right_stick_y;
 
         // Send calculated power to wheels
-        flDrive.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
-        frDrive.setPower(-left_stick_y + left_stick_x - left_trigger + right_trigger);
-        blDrive.setPower(left_stick_y + -left_stick_x - left_trigger + right_trigger);
-        brDrive.setPower(-left_stick_y + -left_stick_x - left_trigger + right_trigger);
+        flDrive.setPower(left_stick_y - left_stick_x + left_trigger - right_trigger);
+        frDrive.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
+        blDrive.setPower(-left_stick_y + left_stick_x + left_trigger - right_trigger);
+        brDrive.setPower(-left_stick_y - left_stick_x - left_trigger + right_trigger);
 
 
         // Show the elapsed game time and wheel power.
