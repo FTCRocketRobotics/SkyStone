@@ -445,3 +445,5 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
         targetsSkyStone.deactivate();
     }
 }
+
+/** © All Rights Reserved */

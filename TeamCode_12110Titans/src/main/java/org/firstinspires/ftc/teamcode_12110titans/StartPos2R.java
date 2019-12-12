@@ -4,3 +4,4 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class StartPos2R{
 }
+/** © All Rights Reserved */
