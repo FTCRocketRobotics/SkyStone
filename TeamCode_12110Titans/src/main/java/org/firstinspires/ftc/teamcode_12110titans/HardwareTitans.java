@@ -56,10 +56,10 @@ public class HardwareTitans
 
 
 
-    private DcMotor fL;
-    private DcMotor fR;
-    private DcMotor bL;
-    private DcMotor bR;
+    public DcMotor fL;
+    public DcMotor fR;
+    public DcMotor bL;
+    public DcMotor bR;
 
 
     public static final double MID_SERVO       =  0.5 ;
