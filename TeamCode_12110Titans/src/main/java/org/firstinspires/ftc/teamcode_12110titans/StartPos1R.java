@@ -47,7 +47,7 @@ public class StartPos1R extends LinearOpMode {
         encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(TURN_SPEED,   12, -12, 4.0);
 
-       /* waitForStart();
+       waitForStart();
 
 
         while (opModeIsActive()){
@@ -142,7 +142,7 @@ public class StartPos1R extends LinearOpMode {
 
 
 
-        }*/
+        }
 
 
 
