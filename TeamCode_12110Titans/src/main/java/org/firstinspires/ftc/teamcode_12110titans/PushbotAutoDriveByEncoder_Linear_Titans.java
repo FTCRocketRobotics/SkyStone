@@ -30,12 +30,9 @@
 package org.firstinspires.ftc.teamcode_12110titans;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -157,17 +154,23 @@ public class PushbotAutoDriveByEncoder_Linear_Titans extends LinearOpMode {
             newfLTarget = robot.fR.getCurrentPosition() + (int)(fLInches * COUNTS_PER_INCH);
 
 
-            /**robot.leftDrive.setTargetPosition(newLeftTarget);
-            robot.rightDrive.setTargetPosition(newRightTarget);
+            robot.bL.setTargetPosition(newbLTarget);
+            robot.bR.setTargetPosition(newbRTarget);
+            robot.fL.setTargetPosition(newfLTarget);
+            robot.fR.setTargetPosition(newfRTarget);
 
             // Turn On RUN_TO_POSITION
-            robot.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.bL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.bR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.fL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.fR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.leftDrive.setPower(Math.abs(speed));
-            robot.rightDrive.setPower(Math.abs(speed));
+            robot.bR.setPower(Math.abs(speed));
+            robot.bL.setPower(Math.abs(speed));
+            robot.fR.setPower(Math.abs(speed));
+            robot.fL.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -177,26 +180,37 @@ public class PushbotAutoDriveByEncoder_Linear_Titans extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
-                   (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
+                   (robot.fL.isBusy() && robot.fR.isBusy() && robot.bL.isBusy() && robot.bR.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newbLTarget,  newbRTarget,
+                 newfLTarget,  newfRTarget);
+
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.leftDrive.getCurrentPosition(),
-                                            robot.rightDrive.getCurrentPosition());
+                                            robot.bL.getCurrentPosition(),
+                                            robot.bR.getCurrentPosition(),
+                                            robot.fL.getCurrentPosition(),
+                                            robot.fR.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.leftDrive.setPower(0);
-            robot.rightDrive.setPower(0);
+            robot.bL.setPower(0);
+            robot.bR.setPower(0);
+            robot.fR.setPower(0);
+            robot.fL.setPower(0);
+
+
 
             // Turn off RUN_TO_POSITION
-            robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.bL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.bR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.fL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.fR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
             //  sleep(250);   // optional pause after each move
-             */
+
         }
     }
 }
