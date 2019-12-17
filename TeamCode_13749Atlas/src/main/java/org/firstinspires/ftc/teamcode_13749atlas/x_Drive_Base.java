@@ -30,6 +30,8 @@
 package org.firstinspires.ftc.teamcode_13749atlas;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -57,9 +59,14 @@ public class x_Drive_Base
     public DcMotor  br  = null;
     public DcMotor  bl  = null;
     public DcMotor  fl  = null;
-    //public DcMotor  leftArm     = null;
-    //public Servo    leftClaw    = null;
-    //public Servo    rightClaw   = null;
+    public DcMotorSimple    elevator    = null;
+
+    public Servo    grabber   = null;
+
+    public DigitalChannel elevatorLimitUpper  = null;
+    public DigitalChannel elevatorLimitLower  = null;
+    public DigitalChannel grabberLimitLower   = null;
+    public DigitalChannel garabberlimitUpper  = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -89,6 +96,14 @@ public class x_Drive_Base
         br = hwMap.get(DcMotor.class, "br_drive");
         fr = hwMap.get(DcMotor.class, "fr_drive");
         fl = hwMap.get(DcMotor.class, "fl_drive");
+        elevator = hwMap.get(DcMotor.class, "elevator");
+        grabber  = hwMap.get(Servo.class, "grabber");
+
+        elevatorLimitUpper  = hwMap.digitalChannel.get("elevatorLimitUpper");
+        elevatorLimitLower  = hwMap.digitalChannel.get("elevatorLimitLower");
+        grabberLimitLower   = hwMap.digitalChannel.get("grabberLimitLower");
+        garabberlimitUpper  = hwMap.digitalChannel.get("garabberlimitUpper");
+
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -96,14 +111,13 @@ public class x_Drive_Base
         br.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.FORWARD);
         fl.setDirection(DcMotor.Direction.REVERSE);
-
+        elevator.setDirection(DcMotor.Direction.FORWARD);
         // Set all motors to zero power
         bl.setPower(0);
         fr.setPower(0);
         fl.setPower(0);
         br.setPower(0);
-
-
+        elevator.setPower(0);
         //leftArm.setPower(0);
 
         // Set all motors to run without encoders.

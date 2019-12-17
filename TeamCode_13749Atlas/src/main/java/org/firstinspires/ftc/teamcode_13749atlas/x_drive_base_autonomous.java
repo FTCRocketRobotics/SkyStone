@@ -119,6 +119,9 @@ public class x_drive_base_autonomous extends LinearOpMode {
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
         encoderDrive(DRIVE_SPEED, 36, 0, 5.0);
+        encoderDrive(DRIVE_SPEED, 0, 36, 5.0);
+        encoderDrive(DRIVE_SPEED, -36, 0, 5.0);
+        encoderDrive(DRIVE_SPEED, 0, -36, 5.0);
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         //robot.rightClaw.setPosition(0.0);
