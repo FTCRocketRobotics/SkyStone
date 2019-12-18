@@ -104,7 +104,6 @@ public class x_Drive_Base
         grabberLimitLower   = hwMap.digitalChannel.get("grabberLimitLower");
         grabberLimitUpper  = hwMap.digitalChannel.get("grabberLimitUpper");
 
-
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         bl.setDirection(DcMotor.Direction.REVERSE);

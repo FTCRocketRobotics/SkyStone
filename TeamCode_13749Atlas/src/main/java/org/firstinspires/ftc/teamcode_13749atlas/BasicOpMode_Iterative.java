@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -57,10 +58,11 @@ public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor blDrive = null;
-    private DcMotor frDrive = null;
-    private DcMotor flDrive =null;
-    private DcMotor brDrive =null;
+    //private DcMotor blDrive = null;
+    //private DcMotor frDrive = null;
+    //private DcMotor flDrive =null;
+    //private DcMotor brDrive =null;
+    x_Drive_Base robot   = new x_Drive_Base();   // Use a xdrive hardware
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -69,20 +71,22 @@ public class BasicOpMode_Iterative extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
+        robot.init(hardwareMap);
+
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        blDrive = hardwareMap.get(DcMotor.class, "bl_drive");
-        frDrive = hardwareMap.get(DcMotor.class, "fr_drive");
-        flDrive = hardwareMap.get(DcMotor.class, "fl_drive");
-        brDrive = hardwareMap.get(DcMotor.class, "br_drive");
+        //blDrive = hardwareMap.get(DcMotor.class, "bl_drive");
+        //frDrive = hardwareMap.get(DcMotor.class, "fr_drive");
+        //flDrive = hardwareMap.get(DcMotor.class, "fl_drive");
+        //brDrive = hardwareMap.get(DcMotor.class, "br_drive");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        flDrive.setDirection(DcMotor.Direction.REVERSE);
-        frDrive.setDirection(DcMotor.Direction.FORWARD);
-        blDrive.setDirection(DcMotor.Direction.REVERSE);
-        brDrive.setDirection(DcMotor.Direction.FORWARD);
+        //flDrive.setDirection(DcMotor.Direction.REVERSE);
+        //frDrive.setDirection(DcMotor.Direction.FORWARD);
+        //blDrive.setDirection(DcMotor.Direction.REVERSE);
+        //brDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -134,10 +138,31 @@ public class BasicOpMode_Iterative extends OpMode
         // rightPower = -gamepad1.right_stick_y;
 
         // Send calculated power to wheels
-        flDrive.setPower(left_stick_y - left_stick_x + left_trigger - right_trigger);
-        frDrive.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
-        blDrive.setPower(-left_stick_y + left_stick_x + left_trigger - right_trigger);
-        brDrive.setPower(-left_stick_y - left_stick_x - left_trigger + right_trigger);
+        robot.fl.setPower(left_stick_y - left_stick_x + left_trigger - right_trigger);
+        robot.fr.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
+        robot.bl.setPower(-left_stick_y + left_stick_x + left_trigger - right_trigger);
+        robot.br.setPower(-left_stick_y - left_stick_x - left_trigger + right_trigger);
+
+        ///////////
+        double elevatorPower;
+        double elevate = -gamepad1.right_stick_y;
+        //            //double turn  =  gamepad1.right_stick_x;
+                   elevatorPower = Range.clip( elevate, -1.0, 1.0) ;
+        //            //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
+        // Tank Mode uses one stick to control each wheel.
+        // - This requires no math, but it is hard to drive forward slowly and keep straight.
+        // leftPower  = -gamepad1.left_stick_y ;
+        // rightPower = -gamepad1.right_stick_y ;
+
+        // Send calculated power to wheels
+        robot.elevator.setPower(elevatorPower);
+
+        if (gamepad1.a == true)
+            robot.grabber.setPosition(Servo.MAX_POSITION);
+
+        if (gamepad1.b == true)
+            robot.grabber.setPosition(Servo.MIN_POSITION);
 
 
         // Show the elapsed game time and wheel power.
