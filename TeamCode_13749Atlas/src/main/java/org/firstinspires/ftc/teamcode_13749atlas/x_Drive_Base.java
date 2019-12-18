@@ -59,14 +59,14 @@ public class x_Drive_Base
     public DcMotor  br  = null;
     public DcMotor  bl  = null;
     public DcMotor  fl  = null;
-    public DcMotorSimple    elevator    = null;
+    public DcMotorSimple  elevator  = null;
 
     public Servo    grabber   = null;
 
     public DigitalChannel elevatorLimitUpper  = null;
     public DigitalChannel elevatorLimitLower  = null;
     public DigitalChannel grabberLimitLower   = null;
-    public DigitalChannel garabberlimitUpper  = null;
+    public DigitalChannel grabberLimitUpper  = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -96,13 +96,13 @@ public class x_Drive_Base
         br = hwMap.get(DcMotor.class, "br_drive");
         fr = hwMap.get(DcMotor.class, "fr_drive");
         fl = hwMap.get(DcMotor.class, "fl_drive");
-        elevator = hwMap.get(DcMotor.class, "elevator");
-        grabber  = hwMap.get(Servo.class, "grabber");
+        elevator = hwMap.get(DcMotorSimple.class, "elevator");
+        grabber = hwMap.get(Servo.class, "grabber");
 
         elevatorLimitUpper  = hwMap.digitalChannel.get("elevatorLimitUpper");
         elevatorLimitLower  = hwMap.digitalChannel.get("elevatorLimitLower");
         grabberLimitLower   = hwMap.digitalChannel.get("grabberLimitLower");
-        garabberlimitUpper  = hwMap.digitalChannel.get("garabberlimitUpper");
+        grabberLimitUpper  = hwMap.digitalChannel.get("grabberLimitUpper");
 
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -111,7 +111,7 @@ public class x_Drive_Base
         br.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.FORWARD);
         fl.setDirection(DcMotor.Direction.REVERSE);
-        elevator.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setDirection(DcMotorSimple.Direction.FORWARD);
         // Set all motors to zero power
         bl.setPower(0);
         fr.setPower(0);
@@ -126,6 +126,7 @@ public class x_Drive_Base
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //elevator.setMode(DcMotorSimple.RunMode.RUN_WITHOUT_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.

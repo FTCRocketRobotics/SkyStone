@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -48,9 +49,12 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="REV SPARKmini Simple Drive Example", group="Concept")
+@TeleOp(name="Grabber Test", group="Concept")
 
 public class klawKontrolMotor extends LinearOpMode {
+
+    static final double MAX_POS     =  1.0;     // Maximum rotational position
+    static final double MIN_POS     =  0.0;     // Minimum rotational position
 
     x_Drive_Base         robot   = new x_Drive_Base();   // Use a Pushbot's hardware
 
@@ -61,6 +65,8 @@ public class klawKontrolMotor extends LinearOpMode {
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        robot.init(hardwareMap);
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -76,12 +82,12 @@ public class klawKontrolMotor extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-
+        robot.grabber.setPosition(MIN_POS);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            //double elevatorPower;
+            double elevatorPower;
             //double rightPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -91,7 +97,7 @@ public class klawKontrolMotor extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double elevate = -gamepad1.right_stick_y;
             //double turn  =  gamepad1.right_stick_x;
-            robot.elevator = Range.clip( elevate, -1.0, 1.0) ;
+            elevatorPower = Range.clip( elevate, -1.0, 1.0) ;
             //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
@@ -100,12 +106,19 @@ public class klawKontrolMotor extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-            elevatorDrive.setPower(elevatorPower);
+            robot.elevator.setPower(elevatorPower);
             //rightDrive.setPower(rightPower);
+
+
+            if (gamepad1.a == true)
+                robot.grabber.setPosition(Servo.MAX_POSITION);
+
+            if (gamepad1.b == true)
+                robot.grabber.setPosition(Servo.MIN_POSITION);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", elevatorPower, rightPower);
+            telemetry.addData("Motors", "elevatorPower (%.2f)", elevatorPower);
             telemetry.update();
         }
     }
