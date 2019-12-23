@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode_13749atlas;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -83,12 +83,12 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  */
 
 @TeleOp(name="SKYSTONE Vuforia Nav Webcam", group ="Concept")
-@Disabled
+
 public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
-    private static final boolean PHONE_IS_PORTRAIT = false  ;
+    private static final boolean PHONE_IS_PORTRAIT = false;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -103,7 +103,7 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " --- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "AcNSnpL/////AAABmb7LnmlMw0YKkYuSmKRzQGdycDBMTRuQ4P/LCJ4F2ttyAw25ZgYBN1AJFI+RpgB3yyb/xos19qJFLwOp7iCo9Htbec7GJKj71UhQZtBXpwbTlxOmZEBUC/MuM+xucuu44PuYx8ZGlVV3CmLz3f0qYNQi13mW/NQQy6xGOJmYGATZXPWQibfviCC61KQQzzSx6fUcpOagvoczlldU3/uHThniFYJaUvNae0lYfnmqIii1LEXHINpdo1KuGiiYcw5NM0Pm2IT7pOAE1cHQZriazzrxe8Uq9jWSa71aQKcdUKtaQNqpwldEf7HKSUMsir6/cJUF08Q49IjRPMvOaQxYnbt1t75Uqv9a82GEu+HitvNS";
 
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here
@@ -143,7 +143,7 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
         /*
          * Retrieve the camera we are to use.
          */
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam1");
 
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
