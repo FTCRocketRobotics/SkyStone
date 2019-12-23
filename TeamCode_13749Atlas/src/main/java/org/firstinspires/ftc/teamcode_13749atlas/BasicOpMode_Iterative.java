@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Atlas Prototype OpMode", group="Iterative Opmode")
+@TeleOp(name="Atlas TeleOp OpMode", group="Iterative Opmode")
 
 public class BasicOpMode_Iterative extends OpMode
 {
@@ -155,14 +155,47 @@ public class BasicOpMode_Iterative extends OpMode
         // leftPower  = -gamepad1.left_stick_y ;
         // rightPower = -gamepad1.right_stick_y ;
 
-        // Send calculated power to wheels
-        robot.elevator.setPower(elevatorPower);
 
-        if (gamepad1.a == true)
+
+        // Send calculated power to Elevator
+        if ((elevatorPower <0 )&& (robot.elevatorLimitLower.getState() != false))
+            robot.elevator.setPower(elevatorPower);
+        if ((elevatorPower >0 )&& (robot.elevatorLimitUpper.getState() != false))
+            robot.elevator.setPower(elevatorPower);
+
+        /*
+        if ((gamepad1.a == true) && (robot.grabberLimitUpper.getState() != false))
             robot.grabber.setPosition(Servo.MAX_POSITION);
 
-        if (gamepad1.b == true)
+        if ((gamepad1.b == true) && (robot.grabberLimitLower.getState() != false))
             robot.grabber.setPosition(Servo.MIN_POSITION);
+         */
+
+        if (gamepad1.a == true)
+        {
+            double temp;
+            temp = robot.grabber.getPosition();
+            temp += 0.1;
+
+            if (temp > 1.0)
+                temp = 1.0;
+
+            robot.grabber.setPosition(temp);
+        }
+
+        if (gamepad1.b == true)
+        {
+            double temp;
+            temp = robot.grabber.getPosition();
+            temp -= 0.1;
+
+            if (temp < -1.0)
+                temp = -1.0;
+
+            robot.grabber.setPosition(temp);
+        }
+
+
 
 
         // Show the elapsed game time and wheel power.
