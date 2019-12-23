@@ -50,6 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Grabber Test", group="Concept")
+@Disabled
 
 public class klawKontrolMotor extends LinearOpMode {
 
