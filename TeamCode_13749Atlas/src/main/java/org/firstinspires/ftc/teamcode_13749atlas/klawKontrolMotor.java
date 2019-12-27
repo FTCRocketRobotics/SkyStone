@@ -83,7 +83,7 @@ public class klawKontrolMotor extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        robot.grabber.setPosition(MIN_POS);
+        robot.grabber.setPower(0);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -109,13 +109,6 @@ public class klawKontrolMotor extends LinearOpMode {
             // Send calculated power to wheels
             robot.elevator.setPower(elevatorPower);
             //rightDrive.setPower(rightPower);
-
-
-            if (gamepad1.a == true)
-                robot.grabber.setPosition(Servo.MAX_POSITION);
-
-            if (gamepad1.b == true)
-                robot.grabber.setPosition(Servo.MIN_POSITION);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());

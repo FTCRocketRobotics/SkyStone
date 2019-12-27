@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode_13749atlas;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -61,7 +62,7 @@ public class x_Drive_Base
     public DcMotor  fl  = null;
     public DcMotorSimple  elevator  = null;
 
-    public Servo    grabber   = null;
+    public CRServo    grabber   = null;
 
     public DigitalChannel elevatorLimitUpper  = null;
     public DigitalChannel elevatorLimitLower  = null;
@@ -97,7 +98,7 @@ public class x_Drive_Base
         fr = hwMap.get(DcMotor.class, "fr_drive");
         fl = hwMap.get(DcMotor.class, "fl_drive");
         elevator = hwMap.get(DcMotorSimple.class, "elevator");
-        grabber = hwMap.get(Servo.class, "grabber");
+        grabber = hwMap.get(CRServo.class, "grabber");
 
         elevatorLimitUpper  = hwMap.digitalChannel.get("elevatorLimitUpper");
         elevatorLimitLower  = hwMap.digitalChannel.get("elevatorLimitLower");
@@ -117,7 +118,7 @@ public class x_Drive_Base
         fl.setPower(0);
         br.setPower(0);
         elevator.setPower(0);
-        //leftArm.setPower(0);
+        grabber.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -125,6 +126,7 @@ public class x_Drive_Base
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        grabber.setDirection(CRServo.Direction.FORWARD);
         //elevator.setMode(DcMotorSimple.RunMode.RUN_WITHOUT_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
