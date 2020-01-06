@@ -439,6 +439,7 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.update();
+
         }
 
         // Disable Tracking when we are done;

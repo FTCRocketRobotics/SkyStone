@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.BasicOpMode_Iterative;
 
@@ -22,6 +23,28 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
    // private DcMotor arm;
 
+    private DcMotor elevator;
+    private DcMotor spinny;
+    private DcMotor inAndOut;
+
+
+    static final double COUNTS_PER_MOTOR_REV_GOBUILDA = 383.06;    // // eg: GoBuilda Motor Encoder
+    static final double COUNTS_PER_MOTOR_REV_ANDYMARK = 1120.00;    // // eg: AndyMark neverest 40
+    /*static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
+    //static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    //static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV_ANDYMARK * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double DRIVE_SPEED = .5;
+    static final double TURN_SPEED = .5;*/
+
+    static final double MAX_EXTENSION_LIMIT_ELEVATOR = 1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
+    static final double MIN_EXTENSION_LIMIT_ELEVATOR =-1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
+
+    static final double MAX_EXTENSION_LIMIT_INANDOUT = 1.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
+    static final double MIN_EXTENSION_LIMIT_INANDOUT =-1.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
+
+    private ElapsedTime runtime = new ElapsedTime();
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status","Initialized");
@@ -33,12 +56,25 @@ public class OneDriverStrategyOne extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         //arm = hardwareMap.get(DcMotor.class, "arm");
 
+        elevator  = hardwareMap.get(DcMotor.class,"elevator");
+        spinny = hardwareMap.get(DcMotor.class,"spinny");
+        inAndOut = hardwareMap.get(DcMotor.class,"inAndOut");
 
-        bL.setDirection(DcMotor.Direction.REVERSE);
-        bR.setDirection(DcMotor.Direction.FORWARD);
-        fL.setDirection(DcMotor.Direction.REVERSE);
-        fR.setDirection(DcMotor.Direction.FORWARD);
-        //arm.setDirection(DcMotor.Direction.FORWARD);
+
+        bL.setDirection(DcMotor.Direction.FORWARD);
+        bR.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.FORWARD);
+        fR.setDirection(DcMotor.Direction.REVERSE);
+
+        spinny.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setDirection(DcMotor.Direction.FORWARD);
+        inAndOut.setDirection(DcMotor.Direction.FORWARD);
+
+        inAndOut.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        inAndOut.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //Wait for driver to press PLAY
         waitForStart();
@@ -49,9 +85,15 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
             double turn=gamepad1.right_stick_x;
-            boolean pullIn=gamepad1.dpad_down;
-            boolean pullOut=gamepad1.dpad_up;
+            //boolean pullIn=gamepad1.dpad_down;
+           // boolean pullOut=gamepad1.dpad_up;
 
+            boolean elevatorUp =gamepad1.dpad_up;
+            boolean elevatorDown = gamepad1.dpad_down;
+            boolean in =gamepad1.dpad_left;
+            boolean out =gamepad1.dpad_right;
+            boolean pullin =gamepad1.y;
+            boolean pushOut =gamepad1.a;
 
             double direction_travel;
             double direction_wheels;
@@ -60,7 +102,10 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double rF_power;
             double lB_power;
             double rB_power;
-            //double arm_power;
+
+            double elevator_power;
+            double inAndOut_power;
+            double spinny_power;
 
             direction_travel=Math.atan2(y,x);
             direction_wheels=direction_travel-Math.PI/4;
@@ -131,15 +176,35 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
-           /* if(pullIn==true){
-                arm_power=1.0;
-            }else if (pullOut==true){
-                arm_power=-1.0;
+            if(in && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
+                inAndOut_power=0.5;
+            }else if (out && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
+                inAndOut_power=-0.5;
             }else{
-                arm_power=0.0;
+                inAndOut_power=0.0;
             }
+            inAndOut.setPower(inAndOut_power);
 
-            arm.setPower(arm_power);*/
+
+            if(elevatorUp && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR ){
+                elevator_power=0.5;
+            }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR ){
+                elevator_power=-0.5;
+            }else{
+                elevator_power=0.0;
+            }
+            elevator.setPower(elevator_power);
+
+            if(pullin){
+                spinny_power=0.5;
+            }else if (pushOut){
+                spinny_power=-0.5;
+            }else{
+                spinny_power=0.0;
+            }
+            spinny.setPower(spinny_power);
+
+
 
             telemetry.addData("fl",lF_power);
             telemetry.addData("fR",rF_power);
