@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.BasicOpMode_Iterative;
@@ -27,6 +28,9 @@ public class OneDriverStrategyOne extends LinearOpMode {
     private DcMotor spinny;
     private DcMotor inAndOut;
 
+    //limit switch
+    private DigitalChannel jackieChan;
+
 
     static final double COUNTS_PER_MOTOR_REV_GOBUILDA = 383.06;    // // eg: GoBuilda Motor Encoder
     static final double COUNTS_PER_MOTOR_REV_ANDYMARK = 1120.00;    // // eg: AndyMark neverest 40
@@ -40,8 +44,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
     static final double MAX_EXTENSION_LIMIT_ELEVATOR = 1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
     static final double MIN_EXTENSION_LIMIT_ELEVATOR =-1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
 
-    static final double MAX_EXTENSION_LIMIT_INANDOUT = 1.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
-    static final double MIN_EXTENSION_LIMIT_INANDOUT =-1.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
+    static final double MAX_EXTENSION_LIMIT_INANDOUT = 0.2 * COUNTS_PER_MOTOR_REV_ANDYMARK;
+    static final double MIN_EXTENSION_LIMIT_INANDOUT =-5.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -60,6 +64,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
         spinny = hardwareMap.get(DcMotor.class,"spinny");
         inAndOut = hardwareMap.get(DcMotor.class,"inAndOut");
 
+        jackieChan = hardwareMap.get(DigitalChannel.class,"jackieChan");
+
 
         bL.setDirection(DcMotor.Direction.FORWARD);
         bR.setDirection(DcMotor.Direction.REVERSE);
@@ -75,6 +81,8 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
         inAndOut.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        jackieChan.setMode(DigitalChannel.Mode.INPUT);
 
         //Wait for driver to press PLAY
         waitForStart();
@@ -176,19 +184,31 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
-            if(in && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
-                inAndOut_power=0.5;
-            }else if (out && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
+            if(jackieChan.getState()){
+                telemetry.addData("jackieChan: ", "Not activated");
+                telemetry.update();
+            } else {
+                telemetry.addData( "jackieChan: ",  "activated");
+                telemetry.update();
+            }
+
+            if(in && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
                 inAndOut_power=-0.5;
-            }else{
+                telemetry.addData("DIRECTION: ", "IN");
+                telemetry.update();
+            }else if (out && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && !jackieChan.getState()){
+                inAndOut_power=0.5;
+                telemetry.addData("DIRECTION: ", "OUT");
+                telemetry.update();
+        }else{
                 inAndOut_power=0.0;
             }
             inAndOut.setPower(inAndOut_power);
 
 
-            if(elevatorUp && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR ){
+            if(elevatorUp && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR){
                 elevator_power=0.5;
-            }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR ){
+            }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR ){
                 elevator_power=-0.5;
             }else{
                 elevator_power=0.0;
@@ -215,7 +235,6 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             telemetry.update();
         }
-
 
 
 
