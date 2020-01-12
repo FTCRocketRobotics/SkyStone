@@ -118,10 +118,14 @@ public class x_drive_base_autonomous extends LinearOpMode {
         //encoderDrive(DRIVE_SPEED,  8,  8, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 36, 0, 5.0);
-        encoderDrive(DRIVE_SPEED, 0, 36, 5.0);
-        encoderDrive(DRIVE_SPEED, -36, 0, 5.0);
-        encoderDrive(DRIVE_SPEED, 0, -36, 5.0);
+        //encoderDrive(DRIVE_SPEED, 36, 0, 5.0);
+        //encoderDrive(DRIVE_SPEED, 0, 36, 5.0);
+        //encoderDrive(DRIVE_SPEED, -36, 0, 5.0);
+        //encoderDrive(DRIVE_SPEED, 0, -36, 5.0);
+        encoderDrive(DRIVE_SPEED, 6, 0, 5.0);
+        //sleep(5000);
+        encoderDrive(DRIVE_SPEED, 0, 45, 5.0);
+
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         //robot.rightClaw.setPosition(0.0);
@@ -157,22 +161,30 @@ public class x_drive_base_autonomous extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newblForwardTarget = robot.bl.getCurrentPosition() + (int)((-forward) * COUNTS_PER_INCH);
-            newbrForwardTarget = robot.br.getCurrentPosition() + (int)((-forward) *COUNTS_PER_INCH);
+            newblForwardTarget = robot.bl.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
+            newbrForwardTarget = robot.br.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
             newfrForwardTarget = robot.fr.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
             newflForwardTarget = robot.fl.getCurrentPosition() + (int)((forward) * COUNTS_PER_INCH);
-            newblStrafeTarget = robot.bl.getCurrentPosition() + (int)((-strafe) * COUNTS_PER_INCH);
-            newbrStrafeTarget = robot.br.getCurrentPosition() + (int)((strafe) * COUNTS_PER_INCH);
+
+            newblStrafeTarget = robot.bl.getCurrentPosition() + (int)((strafe) * COUNTS_PER_INCH);
+            newbrStrafeTarget = robot.br.getCurrentPosition() - (int)((strafe) * COUNTS_PER_INCH);
             newfrStrafeTarget = robot.fr.getCurrentPosition() + (int)((strafe) * COUNTS_PER_INCH);
-            newflStrafeTarget = robot.fl.getCurrentPosition() + (int)((-strafe) * COUNTS_PER_INCH);
-            robot.bl.setTargetPosition(newblForwardTarget);
-            robot.br.setTargetPosition(newbrForwardTarget);
-            robot.fr.setTargetPosition(newfrForwardTarget);
-            robot.fl.setTargetPosition(newflForwardTarget);
-            robot.bl.setTargetPosition(newblStrafeTarget);
-            robot.bl.setTargetPosition(newblStrafeTarget);
-            robot.br.setTargetPosition(newbrStrafeTarget);
-            robot.fr.setTargetPosition(newfrStrafeTarget);
+            newflStrafeTarget = robot.fl.getCurrentPosition() - (int)((strafe) * COUNTS_PER_INCH);
+
+            if (forward != 0) {
+                robot.bl.setTargetPosition(newblForwardTarget);
+                robot.br.setTargetPosition(newbrForwardTarget);
+                robot.fr.setTargetPosition(newfrForwardTarget);
+                robot.fl.setTargetPosition(newflForwardTarget);
+            }
+
+            if (strafe != 0) {
+                robot.bl.setTargetPosition(newblStrafeTarget);
+                robot.bl.setTargetPosition(newblStrafeTarget);
+                robot.br.setTargetPosition(newbrStrafeTarget);
+                robot.fr.setTargetPosition(newfrStrafeTarget);
+            }
+
             robot.fl.setTargetPosition(newflStrafeTarget);
 
             // Turn On RUN_TO_POSITION

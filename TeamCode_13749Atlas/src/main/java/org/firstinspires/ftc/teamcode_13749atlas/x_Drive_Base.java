@@ -107,10 +107,10 @@ public class x_Drive_Base
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        br.setDirection(DcMotor.Direction.FORWARD);
-        fr.setDirection(DcMotor.Direction.FORWARD);
-        fl.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.REVERSE);
+        fr.setDirection(DcMotor.Direction.REVERSE);
+        fl.setDirection(DcMotor.Direction.FORWARD);
         elevator.setDirection(DcMotorSimple.Direction.FORWARD);
         // Set all motors to zero power
         bl.setPower(0);
