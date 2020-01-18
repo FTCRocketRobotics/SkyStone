@@ -167,10 +167,14 @@ public class BlueLeftv2 extends LinearOpMode {
         encoderInAndOut(DRIVE_SPEED,distance,6);
 
 
-        //distance = 2;
+        distance = 2;
         //move forward
         //go straight ahead
-        //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
+
+        distance = -2;
+        //move backward
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
 
         /*
         //go left
