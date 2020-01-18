@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class RedRightv2 extends LinearOpMode {
+public class BlueLeftv2 extends LinearOpMode {
 
     private DcMotor fL;
     private DcMotor fR;
@@ -126,8 +126,8 @@ public class RedRightv2 extends LinearOpMode {
         //distance = 1;
         //encoderElevator(DRIVE_SPEED, distance,6);
 
-        //go right
-        x = -1.0;
+        //go left
+        x = 1.0;
         y = 0.0;
         turn = 0.0;
         power = 0.3;
@@ -236,7 +236,7 @@ public class RedRightv2 extends LinearOpMode {
             bR.setPower(eleventh.rB_power);
         }
 
-
+        
          */
         /*
         distance = 2;
