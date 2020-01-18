@@ -166,13 +166,13 @@ public class RedRightv2 extends LinearOpMode {
         distance = -1;
         encoderInAndOut(DRIVE_SPEED,distance,6);
 
-        
+
         distance = 2;
         //move forward
         //go straight ahead
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
 
-        distance = -2;
+        distance = -4;
         //move backward
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
         //distance = 2;
