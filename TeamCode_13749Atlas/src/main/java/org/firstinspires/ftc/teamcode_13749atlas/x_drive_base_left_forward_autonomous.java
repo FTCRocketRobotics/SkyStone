@@ -61,9 +61,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name=" blue_forward_Autonomous", group="x_Drive")
+@Autonomous(name=" left_forward_Autonomous", group="x_Drive")
 
-public class x_drive_base_forward_autonomous extends LinearOpMode {
+public class x_drive_base_left_forward_autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     x_Drive_Base         robot   = new x_Drive_Base();   // Use a Pushbot's hardware

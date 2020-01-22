@@ -61,9 +61,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="red_Autonomous", group="x_Drive")
+@Autonomous(name=" right_forward_Autonomous", group="x_Drive")
 
-public class x_drive_base_red_autonomous extends LinearOpMode {
+public class x_drive_base_right_forward_autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     x_Drive_Base         robot   = new x_Drive_Base();   // Use a Pushbot's hardware
@@ -122,8 +122,7 @@ public class x_drive_base_red_autonomous extends LinearOpMode {
         //encoderDrive(DRIVE_SPEED, 0, 36, 5.0);
         //encoderDrive(DRIVE_SPEED, -36, 0, 5.0);
         //encoderDrive(DRIVE_SPEED, 0, -36, 5.0);
-        encoderDrive(DRIVE_SPEED, 1, 0, 5.0);
-        //sleep(5000);
+        encoderDrive(DRIVE_SPEED, 26, 0, 5.0);
         encoderDrive(DRIVE_SPEED, 0, -45, 5.0);
 
 
@@ -180,10 +179,11 @@ public class x_drive_base_red_autonomous extends LinearOpMode {
 
             if (strafe != 0) {
                 robot.bl.setTargetPosition(newblStrafeTarget);
+                robot.fl.setTargetPosition(newflStrafeTarget);
                 robot.br.setTargetPosition(newbrStrafeTarget);
                 robot.fr.setTargetPosition(newfrStrafeTarget);
-                robot.fl.setTargetPosition(newflStrafeTarget);
             }
+
 
             // Turn On RUN_TO_POSITION
             robot.bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
