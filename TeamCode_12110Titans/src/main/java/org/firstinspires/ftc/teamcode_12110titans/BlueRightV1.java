@@ -19,8 +19,9 @@ public class BlueRightV1 extends LinearOpMode {
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV_ANDYMARK * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = .5;
-    static final double TURN_SPEED = .5;
+    //changed turn and power 0.5 to 1.0
+    static final double DRIVE_SPEED = 1.0;
+    static final double TURN_SPEED = 1.0;
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -63,12 +64,12 @@ public class BlueRightV1 extends LinearOpMode {
         waitForStart();
 
         int distance = 24;
-
+        //changes power 0.8 to 1.0
         //while (!isStopRequested()) {
         double x = -1.0;
         double y = 0.0;
         double turn = 0.0;
-        double power = 0.8;
+        double power = 1.0;
         boolean pullIn = false;
         boolean pullOut = false;
 
@@ -100,7 +101,7 @@ public class BlueRightV1 extends LinearOpMode {
         int new_bLeftTarget;
         int new_bRightTarget;
 
-        // Ensure that the opmode is still active
+        // Ensure that the OpMode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller

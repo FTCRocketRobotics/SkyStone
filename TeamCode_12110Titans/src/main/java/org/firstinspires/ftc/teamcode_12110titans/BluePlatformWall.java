@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class BlueLeftv2 extends LinearOpMode {
+public class BluePlatformWall extends LinearOpMode {
 
     private DcMotor fL;
     private DcMotor fR;
@@ -29,8 +29,9 @@ public class BlueLeftv2 extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double COUNTS_PER_INCH_GOBUILDA = (COUNTS_PER_MOTOR_REV_GOBUILDA * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = .5;
-    static final double TURN_SPEED = .5;
+    //changed turn nd power 0.5 to 1.0
+    static final double DRIVE_SPEED = 1.0;
+    static final double TURN_SPEED = 1.0;
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -95,11 +96,11 @@ public class BlueLeftv2 extends LinearOpMode {
         //while (!isStopRequested()) {
 
 
-
+        //changed power 0.8 to 1.0
         double x = -1.0;
         double y = 0.0;
         double turn = 0.0;
-        double power = 0.8;
+        double power = 1.0;
         boolean pullIn = false;
         boolean pullOut = false;
 
@@ -127,10 +128,11 @@ public class BlueLeftv2 extends LinearOpMode {
         //encoderElevator(DRIVE_SPEED, distance,6);
 
         //go left
+        //power was 0.3 changed to 1.0
         x = 1.0;
         y = 0.0;
         turn = 0.0;
-        power = 0.3;
+        power = 1.0;
         pullIn = false;
         pullOut = false;
 

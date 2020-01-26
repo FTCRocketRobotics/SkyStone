@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 
+
 public class PickleOpMode extends LinearOpMode {
 
     //privcx/jlb ate Gyroscope Mathlove;
@@ -18,8 +19,8 @@ public class PickleOpMode extends LinearOpMode {
     private DcMotor fR;
     private DcMotor bL;
     private DcMotor bR;
-    private DcMotor Yellow;
-    private DcMotor Red;
+    //private DcMotor Yellow;
+    //private DcMotor Red;
     private DigitalChannel Digi;
     private DistanceSensor sensorColorRange;
     private Servo servoTest;
@@ -30,8 +31,8 @@ public class PickleOpMode extends LinearOpMode {
         telemetry.addData("Status", "Go!");
         telemetry.update();
         //Mathlove = hardwareMap.get(Gyroscope.class, "Mathlove");
-        Yellow = hardwareMap.get(DcMotor.class, "Yellow");
-        Red = hardwareMap.get(DcMotor.class, "Red");
+        //Yellow = hardwareMap.get(DcMotor.class, "Yellow");
+        //Red = hardwareMap.get(DcMotor.class, "Red");
         //bL = hardwareMap.get(DcMotor.class, "bL");
         //bR = hardwareMap.get(DcMotor.class, "bR");
 
@@ -54,8 +55,8 @@ public class PickleOpMode extends LinearOpMode {
         //fR.setDirection(DcMotor.Direction.REVERSE);
         //bL.setDirection(DcMotor.Direction.FORWARD);
         //bR.setDirection(DcMotor.Direction.REVERSE);
-        Red.setDirection(DcMotor.Direction.FORWARD);
-        Yellow.setDirection(DcMotor.Direction.REVERSE);
+        //Red.setDirection(DcMotor.Direction.FORWARD);
+        //Yellow.setDirection(DcMotor.Direction.REVERSE);
 
 
         // run until the end of the match (driver presses STOP)
@@ -70,9 +71,9 @@ public class PickleOpMode extends LinearOpMode {
             powerRed= Range.clip(drive,-1.0,1.0);
             powerYellow= Range.clip(drive,-1.0,1.0);
 
-            Red.setPower(powerYellow);
+            //Red.setPower(powerYellow);
 
-            Yellow.setPower(powerRed);
+            //Yellow.setPower(powerRed);
 
             /** bL.setPower(1.0);
             bR.setPower(1.0);
@@ -80,10 +81,9 @@ public class PickleOpMode extends LinearOpMode {
             fR.setPower(1.0); */
 
             telemetry.addData("Target Power", powerRed);
-            telemetry.addData("Motor Power",Red.getPower());
+            telemetry.addData("Motor Power",powerYellow);
             telemetry.addData("status","running");
             telemetry.update();
-
 
         }
     }
