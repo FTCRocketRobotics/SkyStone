@@ -17,23 +17,18 @@ public class Movement {
     public Movement(double x, double y, double turn, boolean pullIn, boolean pullOut,
                     boolean isRightTurn) {
 
-
         double direction_travel;
         double direction_wheels;
-        this.isRightTurn = isRightTurn;
-
         direction_travel = Math.atan2(y, x);
         direction_wheels = direction_travel - Math.PI / 4;
+        this.isRightTurn = isRightTurn;
 
         if (isRightTurn) {
-
             lF_power = Math.sin(direction_wheels) - turn;
             rF_power = Math.cos(direction_wheels) + turn;
             lB_power = Math.cos(direction_wheels) - turn;
             rB_power = Math.sin(direction_wheels) + turn;
-
         } else {
-
             lF_power = Math.cos(direction_wheels) - turn;
             rF_power = Math.sin(direction_wheels) + turn;
             lB_power = Math.sin(direction_wheels) - turn;
