@@ -27,6 +27,7 @@ public class BlueAuto extends LinearOpMode {
     private DcMotor elevator;
     private DcMotor spinny;
     private DcMotor inAndOut;
+    private boolean isRightTurn = false;
     //distance
     private int distance = 0;
     //limit switch
@@ -90,9 +91,9 @@ public class BlueAuto extends LinearOpMode {
 
 
     private void moveSides(double x, double y, double turn,
-                           boolean pullIn, boolean pullOut) {
+                           boolean pullIn, boolean pullOut, boolean isRightTurn) {
 
-        Movement mSides = new Movement(x, y, turn, pullIn, pullOut);
+        Movement mSides = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
         runtime.reset();
         while (runtime.seconds() < 1) {
             fL.setPower(mSides.lF_power);
@@ -112,15 +113,7 @@ public class BlueAuto extends LinearOpMode {
         startRunOpMode();
 
         // Robot is turning Left
-        Movement mSides = new Movement(1.0, 0, 0, 0, false, false);
-        runtime.reset();
-        while (runtime.seconds() < 1) {
-            fL.setPower(mSides.lF_power);
-            fR.setPower(mSides.rF_power);
-            bL.setPower(mSides.lB_power);
-            bR.setPower(mSides.rB_power);
-        }
-        //moveSides(1.0,0.0,0.0,false, false);
+        moveSides(1.0,0.0,0.0,false, false, isRightTurn=false);
 
         // Robot is moving forward
         distance = 48; // 48
@@ -148,8 +141,7 @@ public class BlueAuto extends LinearOpMode {
         //moveSides(-.6, 0.0, 0.0, 0.2, false, false);
 
         //sleep(2000);
-
-        moveSides(0.0, 0.0, -.17, false, false);
+        moveSides(0.0, 0.0, -.17, false, false, isRightTurn=true);
 
         //move forward
         //go straight ahead
@@ -316,4 +308,4 @@ public class BlueAuto extends LinearOpMode {
 
     }
 }
-//Written by: Vibhav Javali, helped by Chinmayi Ananatha and Anantha Javali.
+//Written by: Vibhav Javali, helped by Anantha Javali.

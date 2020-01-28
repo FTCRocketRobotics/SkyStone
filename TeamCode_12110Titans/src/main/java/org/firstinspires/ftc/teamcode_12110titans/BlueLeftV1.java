@@ -69,11 +69,11 @@ public class BlueLeftV1 extends LinearOpMode {
         double x = 1.0;
         double y = 0.0;
         double turn = 0.0;
-        double power = 0.8;
         boolean pullIn = false;
         boolean pullOut = false;
+        boolean isRightTurn = false;
 
-        Movement first = new Movement(x,y,turn,power,pullIn,pullOut);
+        Movement first = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
         runtime.reset();
         while (runtime.seconds() < 0.2) {

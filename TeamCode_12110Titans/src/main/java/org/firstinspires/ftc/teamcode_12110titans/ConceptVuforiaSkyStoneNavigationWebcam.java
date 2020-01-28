@@ -393,11 +393,11 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
                     x = 0.0;
                     y = 1.0;
                     turn = 0.0;
-                    power = 0.8;
                     pullIn = false;
                     pullOut = false;
+                    boolean isRightTurn = false;
 
-                    Movement first = new Movement(x,y,turn,power,pullIn,pullOut);
+                    Movement first = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
 
                     fL.setPower(first.lF_power);
                     fR.setPower(first.rF_power);
@@ -415,11 +415,11 @@ public class ConceptVuforiaSkyStoneNavigationWebcam extends LinearOpMode {
                     x = 0.0;
                     y = -1.0;
                     turn = 0.0;
-                    power = 0.8;
                     pullIn = false;
                     pullOut = false;
+                    boolean isRightTurn = false;
 
-                    Movement third = new Movement(x,y,turn,power,pullIn,pullOut);
+                    Movement third = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
                     fL.setPower(third.lF_power);
                     fR.setPower(third.rF_power);

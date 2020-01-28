@@ -58,6 +58,7 @@ public class StartPos1R extends LinearOpMode {
             double power= 0;
             boolean pullIn = false;
             boolean pullOut = false;
+            boolean isRightTurn = false;
 
             ElapsedTime eTime = new ElapsedTime();
 
@@ -68,8 +69,9 @@ public class StartPos1R extends LinearOpMode {
             power = 0.8;
             pullIn = false;
             pullOut = false;
+            isRightTurn = false;
 
-            Movement first = new Movement(x,y,turn,power,pullIn,pullOut);
+            Movement first = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
 
             fL.setPower(first.lF_power);
             fR.setPower(first.rF_power);
@@ -87,8 +89,9 @@ public class StartPos1R extends LinearOpMode {
             power = 0.8;
             pullIn = false;
             pullOut = false;
+            isRightTurn = false;
 
-            Movement second = new Movement(x,y,turn,power,pullIn,pullOut);
+            Movement second = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
             fL.setPower(second.lF_power);
             fR.setPower(second.rF_power);
@@ -106,8 +109,9 @@ public class StartPos1R extends LinearOpMode {
             power = 0.8;
             pullIn = false;
             pullOut = false;
+            isRightTurn = false;
 
-            Movement third = new Movement(x,y,turn,power,pullIn,pullOut);
+            Movement third = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
             fL.setPower(third.lF_power);
             fR.setPower(third.rF_power);
@@ -125,8 +129,9 @@ public class StartPos1R extends LinearOpMode {
             power = 0.8;
             pullIn = false;
             pullOut = false;
+            isRightTurn = false;
 
-            Movement fourth = new Movement(x,y,turn,power,pullIn,pullOut);
+            Movement fourth = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
             fL.setPower(fourth.lF_power);
             fR.setPower(fourth.rF_power);

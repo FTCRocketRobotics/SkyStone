@@ -132,11 +132,11 @@ public class BluePlatformWall extends LinearOpMode {
         x = 1.0;
         y = 0.0;
         turn = 0.0;
-        power = 1.0;
         pullIn = false;
         pullOut = false;
+        boolean isRightTurn = false;
 
-        Movement third = new Movement(x,y,turn,power,pullIn,pullOut);
+        Movement third = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
         runtime.reset();
         while (runtime.seconds() < 1) {

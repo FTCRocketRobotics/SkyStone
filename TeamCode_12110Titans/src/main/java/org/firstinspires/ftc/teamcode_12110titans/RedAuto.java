@@ -27,6 +27,8 @@ public class RedAuto extends LinearOpMode {
     private DcMotor elevator;
     private DcMotor spinny;
     private DcMotor inAndOut;
+
+    private boolean isRightTurn = false;
     //distance
     private int distance = 0;
     //limit switch
@@ -89,10 +91,10 @@ public class RedAuto extends LinearOpMode {
     }
 
 
-    private void moveSides(double x, double y, double turn, double power,
-                           boolean pullIn, boolean pullOut) {
+    private void moveSides(double x, double y, double turn, boolean pullIn, boolean pullOut,
+                           boolean isRightTurn) {
 
-        Movement mSides = new Movement(x, y, turn, power, pullIn, pullOut);
+        Movement mSides = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
         runtime.reset();
         while (runtime.seconds() < 1) {
             fL.setPower(mSides.lF_power);
@@ -112,7 +114,7 @@ public class RedAuto extends LinearOpMode {
         startRunOpMode();
 
         // Robot is turning Right
-        moveSides(-1.0, 0.0, 0.0, 0.2, false, false);
+        moveSides(-1.0, 0.0, 0.0,false, false, isRightTurn=true);
 
         // Robot is moving forward
         distance = 48; // 48
@@ -137,7 +139,7 @@ public class RedAuto extends LinearOpMode {
         //encoderInAndOut(DRIVE_SPEED,distance,6);
 
         // Robot is turning left
-        moveSides(0.0, 0.0, 0.2025, 0.2, false, false);
+        moveSides(0.0, 0.0, 0.2025,false, false, isRightTurn=false);
 
         //move forward
         //go straight ahead
