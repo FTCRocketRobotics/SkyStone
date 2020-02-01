@@ -96,12 +96,12 @@ public class OneDriverStrategyOne extends LinearOpMode {
             //boolean pullIn=gamepad1.dpad_down;
            // boolean pullOut=gamepad1.dpad_up;
 
-            boolean elevatorUp =gamepad1.dpad_up;
-            boolean elevatorDown = gamepad1.dpad_down;
-            boolean in =gamepad1.dpad_left;
-            boolean out =gamepad1.dpad_right;
-            boolean pullin =gamepad1.y;
-            boolean pushOut =gamepad1.a;
+            boolean elevatorUp =gamepad2.dpad_up;
+            boolean elevatorDown = gamepad2.dpad_down;
+            boolean in =gamepad2.dpad_left;
+            boolean out =gamepad2.dpad_right;
+            boolean pullin =gamepad2.y;
+            boolean pushOut =gamepad2.a;
 
             double direction_travel;
             double direction_wheels;
