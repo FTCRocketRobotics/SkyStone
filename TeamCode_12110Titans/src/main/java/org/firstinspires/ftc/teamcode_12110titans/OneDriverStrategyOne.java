@@ -30,6 +30,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
     //limit switch
     private DigitalChannel jackieChan;
+    private DigitalChannel bruceLee;
 
 
     static final double COUNTS_PER_MOTOR_REV_GOBUILDA = 383.06;    // // eg: GoBuilda Motor Encoder
@@ -65,6 +66,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
         inAndOut = hardwareMap.get(DcMotor.class,"inAndOut");
 
         jackieChan = hardwareMap.get(DigitalChannel.class,"jackieChan");
+        bruceLee = hardwareMap.get(DigitalChannel.class,"bruceLee");
 
 
         bL.setDirection(DcMotor.Direction.FORWARD);
@@ -83,6 +85,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         jackieChan.setMode(DigitalChannel.Mode.INPUT);
+        bruceLee.setMode(DigitalChannel.Mode.INPUT);
 
         //Wait for driver to press PLAY
         waitForStart();
@@ -172,15 +175,15 @@ public class OneDriverStrategyOne extends LinearOpMode {
             }
 
             if((x==0 && y==0) || gamepad1==null ){
-                fL.setPower(-turn);
-                fR.setPower(turn);
-                bL.setPower(-turn);
-                bR.setPower(turn);
+                fL.setPower(Math.pow(-turn, 3));
+                fR.setPower(Math.pow(turn, 3));
+                bL.setPower(Math.pow(-turn, 3));
+                bR.setPower(Math.pow(turn, 3));
             }else{
-                fL.setPower(lF_power);
-                fR.setPower(rF_power);
-                bL.setPower(lB_power);
-                bR.setPower(rB_power);
+                fL.setPower(Math.pow(lF_power, 3));
+                fR.setPower(Math.pow(rF_power, 3));
+                bL.setPower(Math.pow(lB_power, 3));
+                bR.setPower(Math.pow(rB_power, 3));
 
             }
 
@@ -192,11 +195,19 @@ public class OneDriverStrategyOne extends LinearOpMode {
                 telemetry.update();
             }
 
-            if(in && inAndOut.getCurrentPosition() > MIN_EXTENSION_LIMIT_INANDOUT){
+            if(bruceLee.getState()){
+                telemetry.addData("bruceLee: ", "Not activated");
+                telemetry.update();
+            } else {
+                telemetry.addData( "bruceLee: ",  "activated");
+                telemetry.update();
+            }
+
+            if(in && !bruceLee.getState()){
                 inAndOut_power=-0.5;
                 telemetry.addData("DIRECTION: ", "IN");
                 telemetry.update();
-            }else if (out && inAndOut.getCurrentPosition() < MAX_EXTENSION_LIMIT_INANDOUT && !jackieChan.getState()){
+            }else if (out && !jackieChan.getState()){
                 inAndOut_power=0.5;
                 telemetry.addData("DIRECTION: ", "OUT");
                 telemetry.update();
@@ -206,9 +217,9 @@ public class OneDriverStrategyOne extends LinearOpMode {
             inAndOut.setPower(inAndOut_power);
 
 
-            if(elevatorUp && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR){
+            if(elevatorUp ){
                 elevator_power=0.5;
-            }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR ){
+            }else if (elevatorDown ){
                 elevator_power=-0.5;
             }else{
                 elevator_power=0.0;

@@ -114,27 +114,27 @@ public class RedAuto extends LinearOpMode {
         startRunOpMode();
 
         // Robot is turning Right
-        //moveSides(-1.0, 0.0, 0.0,false, false, isRightTurn=false);//true
+        moveSides(-1.0, 0.0, 0.0,false, false, isRightTurn=false);//true
 
         // Robot is moving forward
         distance = 48; // 48
-        //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
 
         distance = 1;
-        //encoderInAndOut(DRIVE_SPEED,distance,6);
+        encoderInAndOut(DRIVE_SPEED,distance,6);
 
         distance = -2;
-        //encoderElevator(DRIVE_SPEED, distance,6);
+        encoderElevator(DRIVE_SPEED, distance,6);
 
         distance = -48;  // 50
         //move backward
-        //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
 
         distance = 2;
-        //encoderElevator(DRIVE_SPEED, distance,6);
+        encoderElevator(DRIVE_SPEED, distance,6);
 
         distance = -1;
-        //encoderInAndOut(DRIVE_SPEED,distance,6);
+        encoderInAndOut(DRIVE_SPEED,distance,6);
 
         // Robot is spinning left
         moveSides(1.5, 0.0, 0.0,false, false, isRightTurn=false);//false
