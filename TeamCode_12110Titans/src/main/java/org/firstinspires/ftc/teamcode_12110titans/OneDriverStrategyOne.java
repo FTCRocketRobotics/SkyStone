@@ -188,26 +188,26 @@ public class OneDriverStrategyOne extends LinearOpMode {
             }
 
             if(jackieChan.getState()){
-                telemetry.addData("jackieChan: ", "Not activated");
+                telemetry.addData("jackieChan: ", "Is Not Pressed");
                 telemetry.update();
             } else {
-                telemetry.addData( "jackieChan: ",  "activated");
+                telemetry.addData( "jackieChan: ",  "Is Pressed");
                 telemetry.update();
             }
 
             if(bruceLee.getState()){
-                telemetry.addData("bruceLee: ", "Not activated");
+                telemetry.addData("bruceLee: ", "Is Not Pressed");
                 telemetry.update();
             } else {
-                telemetry.addData( "bruceLee: ",  "activated");
+                telemetry.addData( "bruceLee: ",  "Is Pressed");
                 telemetry.update();
             }
 
-            if(in && !bruceLee.getState()){
+            if(in && bruceLee.getState()){
                 inAndOut_power=-0.5;
                 telemetry.addData("DIRECTION: ", "IN");
                 telemetry.update();
-            }else if (out && !jackieChan.getState()){
+            }else if (out && jackieChan.getState()){
                 inAndOut_power=0.5;
                 telemetry.addData("DIRECTION: ", "OUT");
                 telemetry.update();
