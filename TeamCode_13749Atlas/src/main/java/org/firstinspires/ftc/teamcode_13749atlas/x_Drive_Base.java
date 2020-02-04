@@ -56,18 +56,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class x_Drive_Base
 {
     /* Public OpMode members. */
+
+
+    double  MIN_POSITION = 0, MAX_POSITION = 1;
+
     public DcMotor  fr   = null;
     public DcMotor  br  = null;
     public DcMotor  bl  = null;
     public DcMotor  fl  = null;
     public DcMotorSimple  elevator  = null;
 
-    public CRServo    grabber   = null;
+    public Servo grabber = null;
 
     public DigitalChannel elevatorLimitUpper  = null;
     public DigitalChannel elevatorLimitLower  = null;
-    public DigitalChannel grabberLimitLower   = null;
-    public DigitalChannel grabberLimitUpper  = null;
+
+
+    // public DigitalChannel grabberLimitLower   = null;
+   // public DigitalChannel grabberLimitUpper  = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -98,12 +104,12 @@ public class x_Drive_Base
         fr = hwMap.get(DcMotor.class, "fr_drive");
         fl = hwMap.get(DcMotor.class, "fl_drive");
         elevator = hwMap.get(DcMotorSimple.class, "elevator");
-        grabber = hwMap.get(CRServo.class, "grabber");
+        grabber = hwMap.get(Servo.class, "grabber");
 
         elevatorLimitUpper  = hwMap.digitalChannel.get("elevatorLimitUpper");
         elevatorLimitLower  = hwMap.digitalChannel.get("elevatorLimitLower");
-        grabberLimitLower   = hwMap.digitalChannel.get("grabberLimitLower");
-        grabberLimitUpper  = hwMap.digitalChannel.get("grabberLimitUpper");
+       // grabberLimitLower   = hwMap.digitalChannel.get("grabberLimitLower");
+      // grabberLimitUpper  = hwMap.digitalChannel.get("grabberLimitUpper");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -118,7 +124,9 @@ public class x_Drive_Base
         fl.setPower(0);
         br.setPower(0);
         elevator.setPower(0);
-        grabber.setPower(0);
+
+        grabber.scaleRange(0.0, 1.0);
+        grabber.setPosition(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -126,7 +134,7 @@ public class x_Drive_Base
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        grabber.setDirection(CRServo.Direction.FORWARD);
+        grabber.setDirection(Servo.Direction.FORWARD);
         //elevator.setMode(DcMotorSimple.RunMode.RUN_WITHOUT_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

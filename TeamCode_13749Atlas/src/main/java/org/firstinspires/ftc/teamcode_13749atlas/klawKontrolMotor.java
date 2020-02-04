@@ -83,7 +83,7 @@ public class klawKontrolMotor extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        robot.grabber.setPower(0);
+        robot.grabber.setPosition(0);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 

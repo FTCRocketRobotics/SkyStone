@@ -160,35 +160,33 @@ public class BasicOpMode_Iterative extends OpMode
 
 
         // Send calculated power to Elevator
-        if ((elevatorPower <0 )&& (robot.elevatorLimitLower.getState() != false))
+        if ((elevatorPower <0 )&& (robot.elevatorLimitLower.getState() != true))
             robot.elevator.setPower(elevatorPower);
-        else if ((elevatorPower >0 )&& (robot.elevatorLimitUpper.getState() != false))
+        else if ((elevatorPower >0 )&& (robot.elevatorLimitUpper.getState() != true))
             robot.elevator.setPower(elevatorPower);
         else
             robot.elevator.setPower(0);
 
         //
-        double crservoPower;
-        if (gamepad1.a == true)
+        double servoPosition = 0;
+        if (gamepad1.x == true)
         {
-            crservoPower = 0.931415;
-            robot.grabber.setPower(crservoPower);
+            servoPosition = robot.grabber.getPosition();
+            if (servoPosition == robot.grabber.MIN_POSITION)
+                servoPosition = robot.grabber.MAX_POSITION;
+            else
+                servoPosition = robot.grabber.MIN_POSITION;
+
+            robot.grabber.setPosition(servoPosition);
         }
-        else if (gamepad1.b == true)
-        {
-            crservoPower = -0.931415;
-            robot.grabber.setPower(crservoPower);
-        }
-        else
-        {
-            crservoPower = 0;
-            robot.grabber.setPower(crservoPower);
-        }
+
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", left_stick_x, left_stick_y);
-        telemetry.addData("CRServo", "power (%.2f)", crservoPower);
+        telemetry.addData("Servo", "power (%.2f)", servoPosition);
+        telemetry.addData("limitswitch upper", "on/off (%b)", robot.elevatorLimitUpper.getState());
+        telemetry.addData("limitswitch lower", "on/off (%b)", robot.elevatorLimitLower.getState());
     }
 
     /*
