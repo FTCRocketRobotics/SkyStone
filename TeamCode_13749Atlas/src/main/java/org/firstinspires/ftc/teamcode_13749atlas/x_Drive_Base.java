@@ -71,6 +71,9 @@ public class x_Drive_Base
     public DigitalChannel elevatorLimitUpper  = null;
     public DigitalChannel elevatorLimitLower  = null;
 
+    boolean bLinearPickupMode = false;
+    boolean bCubicPickupMode = false;
+    double fPickupModePower = 0.5;
 
     // public DigitalChannel grabberLimitLower   = null;
    // public DigitalChannel grabberLimitUpper  = null;
@@ -125,7 +128,7 @@ public class x_Drive_Base
         br.setPower(0);
         elevator.setPower(0);
 
-        grabber.scaleRange(0.0, 1.0);
+        grabber.scaleRange(0.0, 0.95);
         grabber.setPosition(0);
 
         // Set all motors to run without encoders.

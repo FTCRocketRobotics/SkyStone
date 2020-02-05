@@ -112,6 +112,31 @@ public class BasicOpMode_Iterative extends OpMode
      */
     @Override
     public void loop() {
+        //
+        if (gamepad1.a == true)
+        {
+            if (robot.bLinearPickupMode == true)
+            {
+                robot.bLinearPickupMode = false;
+            }
+            else
+            {
+                robot.bLinearPickupMode = true;
+            }
+        }
+
+        if (gamepad1.b == true)
+        {
+            if (robot.bCubicPickupMode == true)
+            {
+                robot.bCubicPickupMode = false;
+            }
+            else
+            {
+                robot.bCubicPickupMode = true;
+            }
+        }
+
         // Setup a variable for each drive wheel to save power level for telemetry
         double blPower;
         double frPower;
@@ -127,21 +152,33 @@ public class BasicOpMode_Iterative extends OpMode
         double left_stick_x = gamepad1.left_stick_x;
         double left_trigger = gamepad1.left_trigger;
         double right_trigger = gamepad1.right_trigger;
-        //westPower = Range.clip(north + west, -1.0, 1.0);
-        //eastPower = Range.clip(north - west, -1.0, 1.0);
-        //northPower = Range.clip(north + turn, -1.0, 1.0);
-        //southPower = Range.clip(drive - turn, -1.0, 1.0);
 
-        // Tank Mode uses one stick to control each wheel.
-        // this requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y;
-        // rightPower = -gamepad1.right_stick_y;
+        if (robot.bLinearPickupMode)
+        {
+            left_stick_y *= robot.fPickupModePower;
+            left_stick_x *= robot.fPickupModePower;
+            left_trigger *= robot.fPickupModePower;
+            right_trigger *= robot.fPickupModePower;
+
+        }
+        else if (robot.bCubicPickupMode)
+        {
+            left_stick_y = Math.pow(left_stick_y, 3);
+            left_stick_x  = Math.pow(left_stick_y, 3);
+            left_trigger = Math.pow(left_stick_y, 3);
+            right_trigger = Math.pow(left_stick_y, 3);
+        }
+
+        flPower = Range.clip(left_stick_y - left_stick_x + left_trigger - right_trigger, -1.0, 1.0);
+        frPower = Range.clip(left_stick_y + left_stick_x - left_trigger + right_trigger, -1.0, 1.0);
+        blPower = Range.clip(-left_stick_y + left_stick_x + left_trigger - right_trigger, -1.0, 1.0);
+        brPower = Range.clip(-left_stick_y - left_stick_x - left_trigger + right_trigger, -1.0, 1.0);
 
         // Send calculated power to wheels
-        robot.fl.setPower(left_stick_y - left_stick_x + left_trigger - right_trigger);
-        robot.fr.setPower(left_stick_y + left_stick_x - left_trigger + right_trigger);
-        robot.bl.setPower(-left_stick_y + left_stick_x + left_trigger - right_trigger);
-        robot.br.setPower(-left_stick_y - left_stick_x - left_trigger + right_trigger);
+        robot.fl.setPower(flPower);
+        robot.fr.setPower(frPower);
+        robot.bl.setPower(blPower);
+        robot.br.setPower(brPower);
 
         ///////////
 
@@ -169,14 +206,14 @@ public class BasicOpMode_Iterative extends OpMode
 
         //
         double servoPosition = 0;
-        if (gamepad1.x == true)
+        if (gamepad1.left_bumper == true)
         {
-            servoPosition = robot.grabber.getPosition();
-            if (servoPosition == robot.grabber.MIN_POSITION)
-                servoPosition = robot.grabber.MAX_POSITION;
-            else
-                servoPosition = robot.grabber.MIN_POSITION;
-
+            servoPosition = robot.grabber.MIN_POSITION;
+            robot.grabber.setPosition(servoPosition);
+        }
+        else if (gamepad1.right_bumper == true)
+        {
+            servoPosition = robot.grabber.MAX_POSITION;
             robot.grabber.setPosition(servoPosition);
         }
 
@@ -184,7 +221,8 @@ public class BasicOpMode_Iterative extends OpMode
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", left_stick_x, left_stick_y);
-        telemetry.addData("Servo", "power (%.2f)", servoPosition);
+        telemetry.addData("Servo", "position (%.2f)", servoPosition);
+        telemetry.addData("Servo", "current position (%.2f)", robot.grabber.getPosition());
         telemetry.addData("limitswitch upper", "on/off (%b)", robot.elevatorLimitUpper.getState());
         telemetry.addData("limitswitch lower", "on/off (%b)", robot.elevatorLimitLower.getState());
     }
