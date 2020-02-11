@@ -122,7 +122,7 @@ public class x_drive_base_right_autonomous extends LinearOpMode {
         //encoderDrive(DRIVE_SPEED, 0, 36, 5.0);
         //encoderDrive(DRIVE_SPEED, -36, 0, 5.0);
         //encoderDrive(DRIVE_SPEED, 0, -36, 5.0);
-        encoderDrive(DRIVE_SPEED, 3, 0, 5.0);
+        encoderDrive(DRIVE_SPEED, 4, 0, 5.0);
         //sleep(5000);
         encoderDrive(DRIVE_SPEED, 0, -45, 5.0);
 
