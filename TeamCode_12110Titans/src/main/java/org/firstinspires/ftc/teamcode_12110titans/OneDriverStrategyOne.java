@@ -228,6 +228,16 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             if(pullin){
                 spinny_power=0.5;
+                if(elevatorUp && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR){
+                    elevator_power=0.5;
+                }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR ){
+                    elevator_power=-0.5;
+                }else{
+                    elevator_power=0.0;
+                }
+                elevator.setPower(elevator_power);
+
+                if(pullin){
             }else if (pushOut){
                 spinny_power=-0.5;
             }else{
