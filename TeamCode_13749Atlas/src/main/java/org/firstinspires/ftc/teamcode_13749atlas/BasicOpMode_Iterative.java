@@ -164,9 +164,9 @@ public class BasicOpMode_Iterative extends OpMode
         else if (robot.bCubicPickupMode)
         {
             left_stick_y = Math.pow(left_stick_y, 3);
-            left_stick_x  = Math.pow(left_stick_y, 3);
-            left_trigger = Math.pow(left_stick_y, 3);
-            right_trigger = Math.pow(left_stick_y, 3);
+            left_stick_x  = Math.pow(left_stick_x, 3);
+            left_trigger = Math.pow(left_trigger, 3);
+            right_trigger = Math.pow(right_trigger, 3);
         }
 
         flPower = Range.clip(left_stick_y - left_stick_x + left_trigger - right_trigger, -1.0, 1.0);
