@@ -22,7 +22,7 @@ public class OneDriverStrategyOne extends LinearOpMode {
     private DcMotor bL;
     private DcMotor bR;
 
-   // private DcMotor arm;
+    // private DcMotor arm;
 
     private DcMotor elevator;
     private DcMotor spinny;
@@ -43,16 +43,16 @@ public class OneDriverStrategyOne extends LinearOpMode {
     static final double TURN_SPEED = .5;*/
 
     static final double MAX_EXTENSION_LIMIT_ELEVATOR = 1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
-    static final double MIN_EXTENSION_LIMIT_ELEVATOR =-1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
+    static final double MIN_EXTENSION_LIMIT_ELEVATOR = -1.0 * COUNTS_PER_MOTOR_REV_GOBUILDA;
 
     static final double MAX_EXTENSION_LIMIT_INANDOUT = 0.2 * COUNTS_PER_MOTOR_REV_ANDYMARK;
-    static final double MIN_EXTENSION_LIMIT_INANDOUT =-5.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
+    static final double MIN_EXTENSION_LIMIT_INANDOUT = -5.0 * COUNTS_PER_MOTOR_REV_ANDYMARK;
 
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status","Initialized");
+        telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         bL = hardwareMap.get(DcMotor.class, "bL");
@@ -61,12 +61,12 @@ public class OneDriverStrategyOne extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         //arm = hardwareMap.get(DcMotor.class, "arm");
 
-        elevator  = hardwareMap.get(DcMotor.class,"elevator");
-        spinny = hardwareMap.get(DcMotor.class,"spinny");
-        inAndOut = hardwareMap.get(DcMotor.class,"inAndOut");
+        elevator = hardwareMap.get(DcMotor.class, "elevator");
+        spinny = hardwareMap.get(DcMotor.class, "spinny");
+        inAndOut = hardwareMap.get(DcMotor.class, "inAndOut");
 
-        jackieChan = hardwareMap.get(DigitalChannel.class,"jackieChan");
-        bruceLee = hardwareMap.get(DigitalChannel.class,"bruceLee");
+        jackieChan = hardwareMap.get(DigitalChannel.class, "jackieChan");
+        bruceLee = hardwareMap.get(DigitalChannel.class, "bruceLee");
 
 
         bL.setDirection(DcMotor.Direction.FORWARD);
@@ -91,20 +91,20 @@ public class OneDriverStrategyOne extends LinearOpMode {
         waitForStart();
 
         //run until the driver presses STOP
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
 
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
-            double turn=gamepad1.right_stick_x;
+            double turn = gamepad1.right_stick_x;
             //boolean pullIn=gamepad1.dpad_down;
-           // boolean pullOut=gamepad1.dpad_up;
+            // boolean pullOut=gamepad1.dpad_up;
 
-            boolean elevatorUp =gamepad2.dpad_up;
+            boolean elevatorUp = gamepad2.dpad_up;
             boolean elevatorDown = gamepad2.dpad_down;
-            boolean in =gamepad2.dpad_left;
-            boolean out =gamepad2.dpad_right;
-            boolean pullin =gamepad2.y;
-            boolean pushOut =gamepad2.a;
+            boolean in = gamepad2.dpad_left;
+            boolean out = gamepad2.dpad_right;
+            boolean pullin = gamepad2.y;
+            boolean pushOut = gamepad2.a;
 
             double direction_travel;
             double direction_wheels;
@@ -118,45 +118,45 @@ public class OneDriverStrategyOne extends LinearOpMode {
             double inAndOut_power;
             double spinny_power;
 
-            direction_travel=Math.atan2(y,x);
-            direction_wheels=direction_travel-Math.PI/4;
+            direction_travel = Math.atan2(y, x);
+            direction_wheels = direction_travel - Math.PI / 4;
 
-            lF_power=Math.cos(direction_wheels)-turn;
-            rF_power=Math.sin(direction_wheels)+turn;
-            lB_power=Math.sin(direction_wheels)-turn;
-            rB_power=Math.cos(direction_wheels)+turn;
+            lF_power = Math.cos(direction_wheels) - turn;
+            rF_power = Math.sin(direction_wheels) + turn;
+            lB_power = Math.sin(direction_wheels) - turn;
+            rB_power = Math.cos(direction_wheels) + turn;
 
             //A problem is that when you add power for direction and power for rotating, you can get power >1
             //So we had to adjust proportions
-            if(Math.abs(lF_power)>1.0) {
+            if (Math.abs(lF_power) > 1.0) {
                 lF_power = lF_power / Math.abs(lF_power);
                 rF_power = rF_power / Math.abs(lF_power);
                 lB_power = lB_power / Math.abs(lF_power);
                 rB_power = rB_power / Math.abs(lF_power);
-            } else if (Math.abs(rF_power)>1.0) {
+            } else if (Math.abs(rF_power) > 1.0) {
                 lF_power = lF_power / Math.abs(rF_power);
                 rF_power = rF_power / Math.abs(rF_power);
                 lB_power = lB_power / Math.abs(rF_power);
                 rB_power = rB_power / Math.abs(rF_power);
-            } else if (Math.abs(lB_power)>1.0) {
+            } else if (Math.abs(lB_power) > 1.0) {
                 lF_power = lF_power / Math.abs(lB_power);
                 rF_power = rF_power / Math.abs(lB_power);
                 lB_power = lB_power / Math.abs(lB_power);
                 rB_power = rB_power / Math.abs(lB_power);
-            } else if (Math.abs(rB_power)>1.0) {
+            } else if (Math.abs(rB_power) > 1.0) {
                 lF_power = lF_power / Math.abs(rB_power);
                 rF_power = rF_power / Math.abs(rB_power);
                 lB_power = lB_power / Math.abs(rB_power);
                 rB_power = rB_power / Math.abs(rB_power);
             } else {
                 // do nothing
-        }
+            }
 
             //Sometimes when your going straight (some exceptions0 the power to all the wheels is less then 1.
 
             //Also appreciate my wonderful code i made :)
 
-            if(Math.abs(lF_power) < 1.0 && Math.abs(rF_power) < 1.0 && Math.abs(lB_power) < 1.0 && Math.abs(rB_power) < 1.0) {
+            if (Math.abs(lF_power) < 1.0 && Math.abs(rF_power) < 1.0 && Math.abs(lB_power) < 1.0 && Math.abs(rB_power) < 1.0) {
 
                 List<Double> powers = new ArrayList<Double>();
 
@@ -174,12 +174,12 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
-            if((x==0 && y==0) || gamepad1==null ){
+            if ((x == 0 && y == 0) || gamepad1 == null) {
                 fL.setPower(Math.pow(-turn, 3));
                 fR.setPower(Math.pow(turn, 3));
                 bL.setPower(Math.pow(-turn, 3));
                 bR.setPower(Math.pow(turn, 3));
-            }else{
+            } else {
                 fL.setPower(Math.pow(lF_power, 3));
                 fR.setPower(Math.pow(rF_power, 3));
                 bL.setPower(Math.pow(lB_power, 3));
@@ -187,57 +187,68 @@ public class OneDriverStrategyOne extends LinearOpMode {
 
             }
 
-            if(jackieChan.getState()){
+            if (jackieChan.getState()) {
                 telemetry.addData("jackieChan: ", "Is Not Pressed");
                 telemetry.update();
             } else {
-                telemetry.addData( "jackieChan: ",  "Is Pressed");
+                telemetry.addData("jackieChan: ", "Is Pressed");
                 telemetry.update();
             }
 
-            if(bruceLee.getState()){
+            if (bruceLee.getState()) {
                 telemetry.addData("bruceLee: ", "Is Not Pressed");
                 telemetry.update();
             } else {
-                telemetry.addData( "bruceLee: ",  "Is Pressed");
+                telemetry.addData("bruceLee: ", "Is Pressed");
                 telemetry.update();
             }
 
-            if(in && bruceLee.getState()){
-                inAndOut_power=-0.5;
+            if (in && bruceLee.getState()) {
+                inAndOut_power = -0.5;
                 telemetry.addData("DIRECTION: ", "IN");
                 telemetry.update();
-            }else if (out && jackieChan.getState()){
-                inAndOut_power=0.5;
+            } else if (out && jackieChan.getState()) {
+                inAndOut_power = 0.5;
                 telemetry.addData("DIRECTION: ", "OUT");
                 telemetry.update();
-        }else{
-                inAndOut_power=0.0;
+            } else {
+                inAndOut_power = 0.0;
             }
             inAndOut.setPower(inAndOut_power);
 
 
-            if(elevatorUp ){
-                elevator_power=0.5;
-            }else if (elevatorDown ){
-                elevator_power=-0.5;
-            }else{
-                elevator_power=0.0;
+            if (elevatorUp) {
+                elevator_power = 0.5;
+            } else if (elevatorDown) {
+                elevator_power = -0.5;
+            } else {
+                elevator_power = 0.0;
             }
             elevator.setPower(elevator_power);
 
-            if(pullin){
-                spinny_power=0.5;
-                if(elevatorUp && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR){
-                    elevator_power=0.5;
-                }else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR ){
-                    elevator_power=-0.5;
-                }else{
-                    elevator_power=0.0;
+            /*
+            if (pullin) {
+                spinny_power = 0.5;
+                if (elevatorUp && elevator.getCurrentPosition() > MIN_EXTENSION_LIMIT_ELEVATOR) {
+                    elevator_power = 0.5;
+                } else if (elevatorDown && elevator.getCurrentPosition() < MAX_EXTENSION_LIMIT_ELEVATOR) {
+                    elevator_power = -0.5;
+                } else {
+                    elevator_power = 0.0;
                 }
                 elevator.setPower(elevator_power);
 
-                if(pullin){
+                if (pullin) {
+                } else if (pushOut) {
+                    spinny_power = -0.5;
+                } else {
+                    spinny_power = 0.0;
+                }
+                spinny.setPower(spinny_power);
+
+             */
+            if(pullin){
+                spinny_power=0.5;
             }else if (pushOut){
                 spinny_power=-0.5;
             }else{
@@ -246,22 +257,23 @@ public class OneDriverStrategyOne extends LinearOpMode {
             spinny.setPower(spinny_power);
 
 
+                telemetry.addData("fl", lF_power);
+                telemetry.addData("fR", rF_power);
+                telemetry.addData("bL", lB_power);
+                telemetry.addData("bR", rB_power);
+                //telemetry.addData("arm",arm_power);
 
-            telemetry.addData("fl",lF_power);
-            telemetry.addData("fR",rF_power);
-            telemetry.addData("bL",lB_power);
-            telemetry.addData("bR",rB_power);
-            //telemetry.addData("arm",arm_power);
-            
 
-            telemetry.update();
+                telemetry.update();
+            }
+
+
         }
-
 
 
     }
 
 
-}
+
 
 /** © All Rights Reserved */
