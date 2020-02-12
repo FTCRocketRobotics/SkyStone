@@ -129,7 +129,7 @@ public class x_Drive_Base
         elevator.setPower(0);
 
         grabber.scaleRange(0.0, 0.95);
-        grabber.setPosition(0);
+        grabber.setPosition(1);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
