@@ -144,29 +144,49 @@ public class RedRightv2 extends LinearOpMode {
             bR.setPower(third.rB_power);
         }
 
+        //turn right
+        x = 0.0;
+        y = 0.0;
+        turn = -0.5;
+        pullIn = false;
+        pullOut = false;
+        isRightTurn = false;
+
+        Movement thousand = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
+
+        runtime.reset();
+        while (runtime.seconds() < 0.2) {
+            fL.setPower(thousand.lF_power);
+            fR.setPower(thousand.rF_power);
+            bL.setPower(thousand.lB_power);
+            bR.setPower(thousand.rB_power);
+        }
+
+
+
         distance = 48;
         //move forward
         //go straight ahead
-            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
+            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
 
         //distance = -5;
         //encoderInAndOut(DRIVE_SPEED,distance,6);
 
         distance = -30;
-        encoderElevator(DRIVE_SPEED, distance,8);
+        encoderElevator(0.8, distance,3);
 
         distance = -50;
         //move backward
-        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
         distance = 30;
-        encoderElevator(DRIVE_SPEED, distance,6);
+        encoderElevator(0.8, distance,3);
 
         distance = 5;
-        encoderInAndOut(DRIVE_SPEED,distance,8);
+        encoderInAndOut(0.8,distance,3);
 
-
+/*
         distance = 2;
         //move forward
         //go straight ahead
@@ -179,6 +199,33 @@ public class RedRightv2 extends LinearOpMode {
         //move forward
         //go straight ahead
         //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 2);
+
+ */
+        //turn left
+        x = 0.0;
+        y = 0.0;
+        turn = 0.5;
+        pullIn = false;
+        pullOut = false;
+        isRightTurn = false;
+
+        Movement thousand1 = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
+
+        runtime.reset();
+        while (runtime.seconds() < 1) {
+            fL.setPower(thousand1.lF_power);
+            fR.setPower(thousand1.rF_power);
+            bL.setPower(thousand1.lB_power);
+            bR.setPower(thousand1.rB_power);
+        }
+
+        distance = 48;
+        //move forward
+        //go straight ahead
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+
+        // Robot is turning Right
+        //moveSides(0.5, -1.0, 0.0,false, false, isRightTurn=false);//true
 
         /*
         //go left
@@ -441,6 +488,19 @@ public class RedRightv2 extends LinearOpMode {
 
 
 
+        }
+    }
+
+    private void moveSides(double x, double y, double turn, boolean pullIn, boolean pullOut,
+                           boolean isRightTurn) {
+
+        Movement mSides = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
+        runtime.reset();
+        while (runtime.seconds() < 3) {
+            fL.setPower(mSides.lF_power);
+            fR.setPower(mSides.rF_power);
+            bL.setPower(mSides.lB_power);
+            bR.setPower(mSides.rB_power);
         }
     }
 
