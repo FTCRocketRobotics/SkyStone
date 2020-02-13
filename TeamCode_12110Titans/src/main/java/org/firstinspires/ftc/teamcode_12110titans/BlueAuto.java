@@ -120,10 +120,10 @@ public class BlueAuto extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
 
         distance = 1;
-        //encoderInAndOut(DRIVE_SPEED,distance,6);
+        encoderInAndOut(DRIVE_SPEED,distance,6);
 
         distance = -2;
-        //encoderElevator(DRIVE_SPEED, distance,6);
+        encoderElevator(DRIVE_SPEED, distance,6);
 
         distance = -45;  // 50
         //move backward
@@ -132,21 +132,24 @@ public class BlueAuto extends LinearOpMode {
         //sleep(1000);
 
         distance = 2;
-        //encoderElevator(DRIVE_SPEED, distance,6);
+        encoderElevator(DRIVE_SPEED, distance,6);
 
         distance = -1;
-        //encoderInAndOut(DRIVE_SPEED,distance,6);
+        encoderInAndOut(DRIVE_SPEED,distance,6);
 
         // Robot is turning right
         //moveSides(-.6, 0.0, 0.0, 0.2, false, false);
 
         //sleep(2000);
-        moveSides(0.0, 0.0, -.17, false, false, isRightTurn=true);
+        moveSides(-1.5, 0.0, 0.0, false, false, isRightTurn=false);
 
         //move forward
         //go straight ahead
-        distance = 63; // 48
+        distance = 37; // 48
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
+
+        moveSides(20.0, 0.0, 0.0,false, false, isRightTurn=true);//false
+
 
     }
 
