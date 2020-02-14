@@ -191,17 +191,23 @@ public class BlueLeftv2 extends LinearOpMode {
         //distance = 5;
         //encoderInAndOut(0.8,distance,3);
 
+        //distance = 4;
+        //move forward
+        //go straight ahead
+        //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+
 
         runtime2.reset();
         while (runtime2.seconds() < 7.5) {
 
+            /*
             //go right
-            x = -1.0;
+            x = 1.0;
             y = 0.0;
             turn = 0.0;
             pullIn = false;
             pullOut = false;
-            isRightTurn = false;
+            isRightTurn = true;
 
             Movement strafe1 = new Movement(x, y, turn, pullIn, pullOut, isRightTurn);
 
@@ -212,10 +218,18 @@ public class BlueLeftv2 extends LinearOpMode {
                 bL.setPower(strafe1.lB_power);
                 bR.setPower(strafe1.rB_power);
             }
+            */
 
-            distance = -3;
+            distance = 3;
+            //move forward
+            //go straight ahead
+            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+
+            move(-1.0,0,0,0.3);
+
+            //distance = -3;
             //move backward
-            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 1);
+            //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 1);
         }
 
         //turn left - point turn
