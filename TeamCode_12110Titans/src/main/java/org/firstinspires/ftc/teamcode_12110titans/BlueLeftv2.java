@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Autonomous
-public class RedRightv2 extends LinearOpMode {
+public class BlueLeftv2 extends LinearOpMode {
 
     private DcMotor fL;
     private DcMotor fR;
@@ -131,8 +131,8 @@ public class RedRightv2 extends LinearOpMode {
         //distance = 1;
         //encoderElevator(DRIVE_SPEED, distance,6);
 
-        //go right
-        x = -1.0;
+        //go left
+        x = 1.0;
         y = 0.0;
         turn = 0.0;
         pullIn = false;
@@ -149,10 +149,10 @@ public class RedRightv2 extends LinearOpMode {
             bR.setPower(third.rB_power);
         }
 
-        //turn right
+        //turn left
         x = 0.0;
         y = 0.0;
-        turn = -0.5;
+        turn = 0.5;
         pullIn = false;
         pullOut = false;
         isRightTurn = false;
@@ -195,8 +195,8 @@ public class RedRightv2 extends LinearOpMode {
         runtime2.reset();
         while (runtime2.seconds() < 7.5) {
 
-            //go left
-            x = 1.0;
+            //go right
+            x = -1.0;
             y = 0.0;
             turn = 0.0;
             pullIn = false;
@@ -237,8 +237,8 @@ public class RedRightv2 extends LinearOpMode {
         //turn left
         //move(0.9,0,0,3);
 
-        //turn left
-        move(0,0,0.9,1);
+        //turn right
+        move(0,0,-0.9,1);
 
         distance = 26;
         //move forward
