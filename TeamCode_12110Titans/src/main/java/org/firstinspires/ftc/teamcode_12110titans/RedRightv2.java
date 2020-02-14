@@ -179,21 +179,21 @@ public class RedRightv2 extends LinearOpMode {
         //encoderInAndOut(DRIVE_SPEED,distance,6);
 
         distance = -30;
-        encoderElevator(0.8, distance,3);
+        encoderElevator(0.9, distance,2);
 
         distance = -50;
         //move backward
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
         distance = 30;
-        encoderElevator(0.8, distance,3);
+        encoderElevator(0.9, distance,2);
 
         //distance = 5;
         //encoderInAndOut(0.8,distance,3);
 
 
         runtime2.reset();
-        while (runtime2.seconds() < 7) {
+        while (runtime2.seconds() < 7.5) {
 
             //go left
             x = 1.0;
@@ -231,8 +231,19 @@ public class RedRightv2 extends LinearOpMode {
         distance = -30;
         encoderElevator(0.8, distance,3);
 
+        //go straight
+        move(0,1,0,0.5);
+
         //turn left
-        move(0,0,0.8,3);
+        //move(0.9,0,0,3);
+
+        //turn left
+        move(0,0,0.9,1);
+
+        distance = 23;
+        //move forward
+        //go straight ahead
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
         //runtime.reset();
         /*while (runtime.seconds() < 2) {
