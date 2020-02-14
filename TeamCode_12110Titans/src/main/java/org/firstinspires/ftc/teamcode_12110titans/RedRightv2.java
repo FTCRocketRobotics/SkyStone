@@ -6,6 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Autonomous
 public class RedRightv2 extends LinearOpMode {
 
@@ -227,6 +231,8 @@ public class RedRightv2 extends LinearOpMode {
         distance = -30;
         encoderElevator(0.8, distance,3);
 
+        //turn left
+        move(0,0,0.8,3);
 
         //runtime.reset();
         /*while (runtime.seconds() < 2) {
@@ -236,6 +242,7 @@ public class RedRightv2 extends LinearOpMode {
             bR.setPower(0.0);
         }*/
 
+        /*
         //turn left
         x = 0.0;
         y = 0.0;
@@ -259,6 +266,8 @@ public class RedRightv2 extends LinearOpMode {
         //move forward
         //go straight ahead
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+
+         */
 
 /*
         distance = 2;
@@ -475,6 +484,100 @@ public class RedRightv2 extends LinearOpMode {
 
 */
 
+
+    }
+
+    public void move(double x, double y, double turn, double timeout) {
+
+        double direction_travel;
+        double direction_wheels;
+
+        double lF_power;
+        double rF_power;
+        double lB_power;
+        double rB_power;
+
+        ElapsedTime runtime3 = new ElapsedTime();
+
+        direction_travel = Math.atan2(y, x);
+        direction_wheels = direction_travel - Math.PI / 4;
+
+        lF_power = Math.cos(direction_wheels) - turn;
+        rF_power = Math.sin(direction_wheels) + turn;
+        lB_power = Math.sin(direction_wheels) - turn;
+        rB_power = Math.cos(direction_wheels) + turn;
+
+        //A problem is that when you add power for direction and power for rotating, you can get power >1
+        //So we had to adjust proportions
+        if (Math.abs(lF_power) > 1.0) {
+            lF_power = lF_power / Math.abs(lF_power);
+            rF_power = rF_power / Math.abs(lF_power);
+            lB_power = lB_power / Math.abs(lF_power);
+            rB_power = rB_power / Math.abs(lF_power);
+        } else if (Math.abs(rF_power) > 1.0) {
+            lF_power = lF_power / Math.abs(rF_power);
+            rF_power = rF_power / Math.abs(rF_power);
+            lB_power = lB_power / Math.abs(rF_power);
+            rB_power = rB_power / Math.abs(rF_power);
+        } else if (Math.abs(lB_power) > 1.0) {
+            lF_power = lF_power / Math.abs(lB_power);
+            rF_power = rF_power / Math.abs(lB_power);
+            lB_power = lB_power / Math.abs(lB_power);
+            rB_power = rB_power / Math.abs(lB_power);
+        } else if (Math.abs(rB_power) > 1.0) {
+            lF_power = lF_power / Math.abs(rB_power);
+            rF_power = rF_power / Math.abs(rB_power);
+            lB_power = lB_power / Math.abs(rB_power);
+            rB_power = rB_power / Math.abs(rB_power);
+        } else {
+            // do nothing
+        }
+
+        //Sometimes when your going straight (some exceptions0 the power to all the wheels is less then 1.
+
+        //Also appreciate my wonderful code i made :)
+
+        if (Math.abs(lF_power) < 1.0 && Math.abs(rF_power) < 1.0 && Math.abs(lB_power) < 1.0 && Math.abs(rB_power) < 1.0) {
+
+            List<Double> powers = new ArrayList<Double>();
+
+            powers.add(Math.abs(lF_power));
+            powers.add(Math.abs(rF_power));
+            powers.add(Math.abs(lB_power));
+            powers.add(Math.abs(rB_power));
+
+            double largest = Collections.max(powers);
+
+            lF_power = lF_power / largest;
+            rF_power = rF_power / largest;
+            lB_power = lB_power / largest;
+            rB_power = rB_power / largest;
+
+        }
+
+
+
+        runtime3.reset();
+        while(opModeIsActive() && runtime3.seconds() < timeout) {
+
+            if ((x == 0 && y == 0)) {
+                fL.setPower(Math.pow(-turn, 3));
+                fR.setPower(Math.pow(turn, 3));
+                bL.setPower(Math.pow(-turn, 3));
+                bR.setPower(Math.pow(turn, 3));
+            } else {
+                fL.setPower(Math.pow(lF_power, 3));
+                fR.setPower(Math.pow(rF_power, 3));
+                bL.setPower(Math.pow(lB_power, 3));
+                bR.setPower(Math.pow(rB_power, 3));
+
+            }
+        }
+
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
 
     }
 
