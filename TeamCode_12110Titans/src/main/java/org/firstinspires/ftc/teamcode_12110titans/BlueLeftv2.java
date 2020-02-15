@@ -179,14 +179,14 @@ public class BlueLeftv2 extends LinearOpMode {
         //encoderInAndOut(DRIVE_SPEED,distance,6);
 
         distance = -30;
-        encoderElevator(0.9, distance,2);
+        encoderElevator(0.9, distance,1.5);
 
-        distance = -50;
+        distance = -55;
         //move backward
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
         distance = 30;
-        encoderElevator(0.9, distance,2);
+        encoderElevator(0.9, distance,1.5);
 
         //distance = 5;
         //encoderInAndOut(0.8,distance,3);
@@ -196,9 +196,16 @@ public class BlueLeftv2 extends LinearOpMode {
         //go straight ahead
         //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
 
+        //distance = 2;
+        //move forward
+        //go straight ahead
+        //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+
+        //move(-0.5,1,0,10);
+
 
         runtime2.reset();
-        while (runtime2.seconds() < 7.5) {
+        while (runtime2.seconds() < 8.0) {
 
             /*
             //go right
@@ -223,14 +230,19 @@ public class BlueLeftv2 extends LinearOpMode {
             distance = 3;
             //move forward
             //go straight ahead
-            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
+            encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 1);
 
-            move(-1.0,0,0,0.3);
+            move(-0.9,0,0,0.3);
+
+            //distance = -3;
+            //move backward
+            //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 1);
 
             //distance = -3;
             //move backward
             //encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 1);
         }
+
 
         //turn left - point turn
         //x = 0.0;
@@ -243,18 +255,18 @@ public class BlueLeftv2 extends LinearOpMode {
         //Movement thousand1 = new Movement(x,y,turn,pullIn,pullOut, isRightTurn);
 
         distance = -30;
-        encoderElevator(0.8, distance,3);
+        encoderElevator(0.9, distance,1.5);
 
         //go straight
-        move(0,1,0,0.5);
+        //move(0,1,0,0.5);
 
         //turn left
         //move(0.9,0,0,3);
 
         //turn right
-        move(0,0,-0.9,1);
+        move(0,0,-0.9,1.2);
 
-        distance = 26;
+        distance = 32;
         //move forward
         //go straight ahead
         encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 5);
